@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>My Node.js Center</title>
+  <% include ../common/stylesheets.html %>
+  <% include ../common/javascripts.html %>
+  <% include ../common/extend_js.html %>
+</head>
+<body>
+<div id="wrapper">
+  <div id="nav">
+    <ul>
+      <li><a href="/admin/home">Home</a><span> ›</span></li>
+      <li><a href="/admin/page">Page Index</a><span> ›</span></li>
+      <li><a href="/admin/page/edit">AAAAAAAA</a><span> ›</span></li>
+    </ul>
+    <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
+  </div>
+  <form id='write_post' method='post'>
+    <div id='post_info'>
+      <div class='item title'>
+        <label for='page_title'><span>Title</span></label>
+        <input type='text' name='title' id='page_title' value='AAAAAAA'/>
+      </div>
+      <div class='item slug'>
+        <label for='page_slug'><span>Slug</span></label>
+        <input type='text' name='slug' id='page_slug' value='qqqqqqq' required="">
+      </div>
+      <div class='item created'>
+        <label for='page_created'><span>Created</span></label>
+        <input type='text' name='created' id='page_created' value='ddddddd' required=''>
+      </div>
+      <div class='clearfix'></div>
+    </div>
+    <div id='content'>
+      <div class="wmd-panel">
+        <div id="wmd-button-bar"></div>
+        <textarea class="wmd-input post_content" name='content' id="wmd-input" required=''>zzzzzzzzzz</textarea>
+      </div>
+    </div>
+    <div id='meta'>
+      <input type='hidden' name='old_slug' id="page_old_slug" value='dddddddddddddd'>
+      <button class='btn btn-small'><a id='post-it'>Edit Done</a></button>
+    </div>
+    <div class="clearfix"></div>
+    <div id="preview">
+      <div id="wmd-preview" class="wmd-panel wmd-preview"></div>
+    </div>
+  </form>
+</div>
+<script>
+  $('input#post_created').simpleDatepicker({ startdate: 2009, enddate: 2013 });
+  (function () {
+    var converter = Markdown.getSanitizingConverter();
+    var editor = new Markdown.Editor(converter);
+    editor.run();
+
+    window.onbeforeunload = function(){
+      return '你正在编辑日志，确定不保存编辑内容吗？';
+    };
+
+    $("#post-it").click(function(){
+      window.onbeforeunload = null;
+    });
+
+  })();
+</script>
+</body>
+</html>

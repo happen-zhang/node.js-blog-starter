@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <title>My Node.js Center</title>
+    <% include ../common/stylesheets.html %>
+    <% include ../common/javascripts.html %>
+</head>
+<body>
+<div id="wrapper">
+  <div id="nav">
+    <ul>
+      <li><a href="/admin/home">Home</a><span> ›</span></li>
+      <li><a href="/admin/page">Page Index</a></li>
+    </ul>
+    <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
+  </div>
+  <div id="post-list">
+    <ul>
+      <li>
+        <a href='/admin/page/edit'>标题标题标题标题</a>
+
+        <div class='action'>
+              <span class='edit'>
+                <a href='/page' target='_blank'>view</a>
+              </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div class='clearfix'></div>
+</div>
+</body>
+</html>

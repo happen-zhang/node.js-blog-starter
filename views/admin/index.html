@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <title>My Node.js Center</title>
+    <% include common/stylesheets.html %>
+    <% include common/javascripts.html %>
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="nav">
+        <ul>
+          <li><a href="/admin/home">Home</a></li>
+        </ul>
+        <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
+      </div>
+      <div id="action">
+        <div><a href="/admin/post">Post Index</a></div>
+        <div><a href="/admin/post/write">New Post</a></div>
+        <hr>
+        <div><a href="/admin/page">Page Index</a></div>
+        <div><a href="/admin/page/write">New Page</a></div>
+        <hr>
+        <div><a href="/admin/comment">Comment Index</a></div>
+        <div><a href="/admin/verifyAkismet" target="_blank">Verify Akismet</a></div>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  </body>
+</html>
