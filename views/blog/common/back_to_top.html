@@ -1,0 +1,21 @@
+<div id="backtop"><span>回到顶部</span></div>
+<script src='//libs.qiniudn.com/prettify/r224/prettify.js'></script>
+<script type='text/javascript'>
+  $(document).ready(function(){
+    $("#backtop").hide();
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 100) {
+        $('#backtop').fadeIn();
+      } else {
+        $('#backtop').fadeOut();
+      }
+    });
+    $('#backtop').click(function () {
+      $('body,html').animate({
+        scrollTop: 0
+      }, 500);
+    });
+    $("pre").addClass("prettyprint");
+    prettyPrint();
+  });
+</script>
