@@ -7,7 +7,7 @@ var config = require('../config').config;
 // 首页
 exports.index = function(req, res, next) {
   var data = {
-    blogName: config.blogName
+    blogname: config.blogname
   }
 
   res.render('blog/index', data);
@@ -16,7 +16,7 @@ exports.index = function(req, res, next) {
 // 文章页
 exports.post = function(req, res, next) {
   var data = {
-    blogName: config.blogName
+    blogname: config.blogname
   }
 
   res.render('blog/post', data);
@@ -25,7 +25,7 @@ exports.post = function(req, res, next) {
 // 标签页
 exports.tag = function(req, res, next) {
   var data = {
-    blogName: config.blogName
+    blogname: config.blogname
   }
 
   res.render('blog/tag', data);
@@ -34,7 +34,7 @@ exports.tag = function(req, res, next) {
 // 归档页
 exports.archives = function(req, res, next) {
   var data = {
-    blogName: config.blogName
+    blogname: config.blogname
   }
 
   res.render('blog/archives', data);
@@ -43,7 +43,7 @@ exports.archives = function(req, res, next) {
 // 友情链接
 exports.links = function(req, res, next) {
   var data = {
-    blogName: config.blogName
+    blogname: config.blogname
   }
 
   res.render('blog/links', data);
@@ -52,7 +52,7 @@ exports.links = function(req, res, next) {
 // 关于我
 exports.about = function(req, res, next) {
   var data = {
-    blogName: config.blogName
+    blogname: config.blogname
   }
 
   res.render('blog/about', data);

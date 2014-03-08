@@ -13,7 +13,7 @@ var mongoUrl = util.generateMongoUrl(dbConfig);
 
 // Blog配置
 var config = {
-  blogName: 'happen',
+  blogname: 'happen',
   port: 3000
 };
 
