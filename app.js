@@ -9,18 +9,18 @@ var route = require('./routes');
 
 var app = express();
 // 静态文件目录
-var static_dir = __dirname + '/public/';
+var staticDir = __dirname + '/public/';
 // 视图文件目录
-var views_dir = __dirname + '/views/';
+var viewsDir = __dirname + '/views/';
 // favicon
-var favicon_path = static_dir + 'images/favicon.ico';
+var faviconPath = staticDir + 'images/favicon.ico';
 
 /**
  * setting 
  */
 
 app.set('port', config.port);
-app.set('views', views_dir);
+app.set('views', viewsDir);
 // app.set('view engine', 'ejs');
 // 更改模板引擎
 app.engine('.html', require('ejs').__express);
@@ -31,11 +31,11 @@ app.set('view engine', 'html');
  */
 
 // static assets
-app.use(express.static(static_dir));
+app.use(express.static(staticDir));
 // partials
 app.use(partials());
 // favicon
-app.use(express.favicon(favicon_path));
+app.use(express.favicon(faviconPath));
 // bodyParser
 app.use(express.bodyParser());
 
