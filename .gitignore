@@ -16,5 +16,4 @@ npm-debug.log
 
 .idea
 *.iml
-config.js
 .DS_Store
