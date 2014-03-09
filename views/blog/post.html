@@ -1,8 +1,8 @@
 <div id="main" class="container post">
   <div class="content">
     <article class="post block">
-      <h1 class="title">Grunt GUI 工具： Spock</h1>
-      <div class="meta"><time datetime="2014-02-20T00:00:00+00:00">2014年2月20日</time></div>
+      <h1 class="title"><%= post.title %></h1>
+      <div class="meta"><time datetime="<%= post.created %>"><%= locals.moment(post.created).format('YYYY-MM-DD') %></time></div>
       <div class="entry"><%- post.content %></div>
       <div class="tags">
         <p>
