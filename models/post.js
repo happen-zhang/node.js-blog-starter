@@ -54,9 +54,7 @@ PostSchema.static('findAll', function(skip, limit, fields, callback) {
 
 // findBySlug
 PostSchema.static('findBySlug', function(slug, fields, callback) {
-  var conditions = { slug: slug };
-
-  return this.find(conditions, fields, null, callback);
+  return this.find({ slug: slug }, fields, null, callback);
 });
 
 module.exports = mongoose.model('Post', PostSchema);
