@@ -9,8 +9,8 @@ var mongoose = require('mongoose');
  */
 
 var CommentSchema = new mongoose.Schema({
-  // 名称
-  name: String,
+  // 评论者
+  author: String,
   // 邮箱
   email: String,
   // 网站

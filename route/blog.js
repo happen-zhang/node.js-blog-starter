@@ -68,13 +68,25 @@ exports.index = function(req, res, exceptionHandler) {
 };
 
 // 文章页
-exports.post = function(req, res, next) {
-  var data = {
-    title: config.blogname,
-    blogname: config.blogname
-  }
+exports.post = function(req, res, exceptionHandler) {
+  Post.findBySlug(req.params.slug, null, function(err, posts) {
+    if (err) {
+      exceptionHandler.handleError(err, req, res);
+    }
+    
+    if (0 === posts.length) {
+      exceptionHandler.handleNotFound(req, res);
+    }
 
-  res.render('blog/post', data);
+    var post = posts[0];
+    var data = {
+      title: config.blogname + ' | ' + post.title,
+      blogname: config.blogname,
+      post: post
+    }
+
+    res.render('blog/post', data);    
+  });
 };
 
 // 标签页

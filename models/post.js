@@ -38,7 +38,8 @@ PostSchema.virtual('briefContent').get(function() {
   return '';
 });
 
-PostSchema.static('findAll', function (skip, limit, fields, callback) {
+// findAll
+PostSchema.static('findAll', function(skip, limit, fields, callback) {
   var options = {
     skip: skip,
     limit: limit,
@@ -49,6 +50,13 @@ PostSchema.static('findAll', function (skip, limit, fields, callback) {
   };
 
   return this.find(null, fields, options, callback);
+});
+
+// findBySlug
+PostSchema.static('findBySlug', function(slug, fields, callback) {
+  var conditions = { slug: slug };
+
+  return this.find(conditions, fields, null, callback);
 });
 
 module.exports = mongoose.model('Post', PostSchema);

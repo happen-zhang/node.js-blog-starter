@@ -1,56 +1,47 @@
- <div id="main" class="container post">
+<div id="main" class="container post">
   <div class="content">
     <article class="post block">
       <h1 class="title">Grunt GUI 工具： Spock</h1>
       <div class="meta"><time datetime="2014-02-20T00:00:00+00:00">2014年2月20日</time></div>
-      <div class="entry"><p>在大家纷纷推出各种工具的 CLI 版本时，Spock 在这里显得有点格格不入，但我确实喜爱一目了然的 GUI 界面多一些。</p>
-<p>一个原因是：搞 “外包” 并行项目太多，一次可能跑着好几个 Grunt Watch 。 </p>
-<p>还有一个原因或许是 Windows 下的命令行太挫了，虽然有了 <a href="http://bliker.github.io/cmder/">Cmder</a> 后这个情况改善了好多。</p>
-<p><img src="http://ww2.sinaimg.cn/mw690/49d6143agw1edprblqcybj20dm0beq3d.jpg" alt=""></p>
-<p>当然，你想看任务运行的详细过程也是可以的：</p>
-<!--more-->
-
-<p><img src="http://ww3.sinaimg.cn/mw690/49d6143agw1edprfgbtacj20dc0b4dg7.jpg" alt=""></p>
-<p>Windows 的 EXE 打包已经好了，Mac 版的包要是谁愿意来打一个，那自然是很好滴。</p>
-<p><a href="https://github.com/willerce/spock/releases">https://github.com/willerce/spock/releases</a></p>
-<p>源代码在这里：</p>
-<p><a href="https://github.com/willerce/spock">https://github.com/willerce/spock</a></p>
-<p>网站现在还很简陋，除了会有 Spock 的文档，我还计划加入一些 Grunt 的相关文章 </p>
-<p><a href="http://www.getspock.com/">http://www.getspock.com/</a></p>
-<h2 id="-">使用</h2>
-<p>Spock 本身是基于 grunt-cli 的，所以，在使用 Spock 之前，你的项目是需要可以正常使用 grunt 的。</p>
-<p>也就是说</p>
-<pre><code>$ cd grunt-demo-project
-$ grunt default</code></pre>
-<p>运行起来是正常的。</p>
-<p>这时候，把你的项目文件夹拖到 Spcok 上黑乎乎的地方就添加进来了。</p>
-</div>
+      <div class="entry"><%- post.content %></div>
       <div class="tags">
         <p>
+          <% if (0 !== post.tags.length) { %>
           Tags:
-          <a href="/tag/">node-webkit</a>，
-          <a href="/tag/">grunt</a>，
-          <a href="/tag/">spock</a>
+            <% post.tags.forEach(function(tag, i) { %>
+              <% if (i === (post.tags.length - 1)) { %>
+              <a href="/tag/<%= tag.name %>"><%= tag.name %></a>
+              <% } else { %>
+              <a href="/tag/<%= tag.name %>"><%= tag.name %></a>，
+              <% } %>
+            <% }); %>
+          <% } %>
         </p>
       </div>
     </article>
+    <% if (0 !== post.comments.length) { %>
     <div id="comments" class="block">
       <ol class="commentlist">
-        <li id='comment-52c6662a27b6cd18410000dd' class='comment clearfix'>
-          <img src="http://www.gravatar.com/avatar/91afabec890f4e471ebfe6a4d5ca19dd?s=36&amp;r=pg&amp;d=mm" width='36' height='36' class='avatar' alt="">
+        <% post.comments.forEach(function(comment, i) { %>
+        <li id='comment-<%= comment._id %>' class='comment clearfix'>
+          <img src="<%= locals.gravatar.url(comment.email, { s: '36', r: 'pg', d: 'mm' }) %>" width='36' height='36' class='avatar' alt="">
           <div class="content">
             <div class="info">
-              
-              <span class="reviewer">keloo</span>
-              
-              <time datetime='2014-01-03T07:26:34+00:00'>2014年1月3日</time>
-              <div class="floor">2</div>
+              <% if ("undefined" === typeof comment.website) { %>
+              <span class="reviewer"><%= comment.author %></span>
+              <% } else { %>
+              <a href="<%= comment.website %>" class="reviewer" url='external nofollow'><%= comment.author %></a>
+              <% } %>
+              <time datetime='<%= comment.created %>'><%= locals.moment(comment.created).format('YYYY-MM-DD HH:mm') %></time>
+              <div class="floor"><%= i + 1 %></div>
             </div>
-            <div id="commentbody-53684" class='description' itemprop='description'>朝着目标，一步一步的实现，赞一个</div>
+            <div id="commentbody-53684" class='description' itemprop='description'><%= comment.content %></div>
           </div>
         </li>
+        <% }); %>
       </ol>
     </div>
+    <% } %>
     <div id="reply" class="block inner">
       <form action="/comment" method='post' id="cmtform">
         <div id="respond" class="clearfix">
@@ -73,9 +64,8 @@ $ grunt default</code></pre>
             </div>
             <div class="row">
               <input id="comment-submit" name='submit' type='submit' tabindex='5' value='Post Comment' class="button">
-              <input type="hidden" name='id' value='530596658cdc7d4768000001'>
-              <input type="hidden" name='slug' value='spock-alpha'>
-              <input type="text" name="author" value="" id="no_author" />
+              <input type="hidden" name='id' value='<%= post._id %>'>
+              <input type="hidden" name='slug' value='<%= post.slug %>'>
             </div>
           </div>
         </div>

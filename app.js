@@ -44,6 +44,7 @@ app.use(express.bodyParser());
  */
 
 app.locals.moment= require('moment');
+app.locals.gravatar = require('gravatar');
 
 // 路由
 route.handle(app);

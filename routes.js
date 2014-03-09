@@ -1,5 +1,5 @@
 /**
- * /route.js
+ * /routes.js
  */
 
 var blog = require('./route/blog');
@@ -8,7 +8,7 @@ var admin = require('./route/admin');
 exports.handle = function(app) {
   app.get('/', blog.index, exceptionHandler);
   app.get(/^\/p\/(\d+)$/, blog.index, exceptionHandler);
-  app.get('/post', blog.post, exceptionHandler);
+  app.get('/post/:slug', blog.post, exceptionHandler);
   app.get('/tag', blog.tag, exceptionHandler);
   app.get('/archives', blog.archives, exceptionHandler);
   app.get('/links', blog.links, exceptionHandler);
