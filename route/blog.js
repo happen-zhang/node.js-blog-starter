@@ -9,7 +9,7 @@ var Post = require('../models/post');
 exports.index = function(req, res, exceptionHandler) {
   Post.count(null, function(err, count) {
     if (err) {
-      exceptionHandler.handleError(err, req, res);
+      return exceptionHandler().handleError(err, req, res);
     }
 
     if (0 === count) {
@@ -37,7 +37,7 @@ exports.index = function(req, res, exceptionHandler) {
     var fields = 'title slug content created';
     Post.findAll(start, listRows, fields, function(err, posts) {
       if (err) {
-        exceptionHandler().handleError(err, req, res);
+        return exceptionHandler().handleError(err, req, res);
       }
 
       // 上一页 下一页
@@ -71,11 +71,11 @@ exports.index = function(req, res, exceptionHandler) {
 exports.post = function(req, res, exceptionHandler) {
   Post.findBySlug(req.params.slug, null, function(err, posts) {
     if (err) {
-      exceptionHandler.handleError(err, req, res);
+      return exceptionHandler().handleError(err, req, res);
     }
-    
+
     if (0 === posts.length) {
-      exceptionHandler.handleNotFound(req, res);
+      return exceptionHandler().handleNotFound(req, res);
     }
 
     var post = posts[0];
