@@ -2,6 +2,8 @@
  * /routes/blog.js
  */
 
+var moment = require('moment');
+
 var config = require('../config').config;
 var Post = require('../models/post');
 var Link = require('../models/link');
@@ -108,14 +110,41 @@ exports.tag = function(req, res, exceptionHandler) {
   });
 };
 
-// 归档页
-exports.archives = function(req, res, next) {
-  var data = {
-    title: config.blogname,
-    blogname: config.blogname
-  }
+// 存档页
+exports.archives = function(req, res, exceptionHandler) {
+  Post.findAll(null, null, null, function(err, posts) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
 
-  res.render('blog/archives', data);
+    if (0 === posts.length) {
+      res.redirect('/admin/install');
+    }
+
+    var archivesList = [];
+    posts.forEach(function(post, i) {
+      var year = moment(post.created).format('YYYY');
+      if ('undefined' === typeof archivesList[year]) {
+        archivesList[year] = { year: year, archives: [] };
+      }
+
+      archivesList[year].archives.push(post);
+    });
+
+    // sort by year desc 
+    var compare = function(a, b) {
+      return a.year < b.year;
+    }
+    archivesList = archivesList.sort(compare);
+
+    var data = {
+      title: config.blogname + ' | ' + '文章存档',
+      blogname: config.blogname,
+      archivesList: archivesList
+    };
+
+    res.render('blog/archives', data);
+  });
 };
 
 // 友情链接

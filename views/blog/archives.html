@@ -3,13 +3,17 @@
     <article class="post block">
       <h1 class="title">文章存档</h1>
       <div class="entry archives">
-        <h2>2014</h2>
+        <% archivesList.forEach(function(archives) { %>
+        <h2><%= archives.year %></h2>
           <ul>
+            <% archives.archives.forEach(function(post) { %>
             <li>
-              <time datetime="2014-02-20T00:00:00+00:00">02/20</time>
-                <a href="/post/">Grunt GUI 工具： Spock</a>
+              <time datetime="<%= post.created %>"><%= locals.moment(post.created).format('MM-DD') %></time>
+                <a href="/post/<%= post.slug %>"><%= post.title %></a>
             </li>
+            <% }); %>
           </ul>
+        <% }); %>
       </div>
     </article>
   </div>
