@@ -53,6 +53,7 @@ exports.index = function(req, res, exceptionHandler) {
       }
 
       var data = {
+        title: config.blogname,
         blogname: config.blogname,
         posts: posts,
         maxPage: maxPage,
@@ -69,6 +70,7 @@ exports.index = function(req, res, exceptionHandler) {
 // 文章页
 exports.post = function(req, res, next) {
   var data = {
+    title: config.blogname,
     blogname: config.blogname
   }
 
@@ -78,6 +80,7 @@ exports.post = function(req, res, next) {
 // 标签页
 exports.tag = function(req, res, next) {
   var data = {
+    title: config.blogname,
     blogname: config.blogname
   }
 
@@ -87,6 +90,7 @@ exports.tag = function(req, res, next) {
 // 归档页
 exports.archives = function(req, res, next) {
   var data = {
+    title: config.blogname,
     blogname: config.blogname
   }
 
@@ -96,6 +100,7 @@ exports.archives = function(req, res, next) {
 // 友情链接
 exports.links = function(req, res, next) {
   var data = {
+    title: config.blogname,
     blogname: config.blogname
   }
 
@@ -105,6 +110,7 @@ exports.links = function(req, res, next) {
 // 关于我
 exports.about = function(req, res, next) {
   var data = {
+    title: config.blogname,
     blogname: config.blogname
   }
 
