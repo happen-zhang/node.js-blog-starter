@@ -28,4 +28,17 @@ var PostSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now }
 });
 
+PostSchema.static('findAll', function (skip, limit, fields, callback) {
+  var options = {
+    skip: skip,
+    limit: limit,
+    sort: {
+      created: -1,
+      _id: -1
+    }
+  };
+
+  return this.find(null, fields, options, callback);
+});
+
 module.exports = mongoose.model('Post', PostSchema);

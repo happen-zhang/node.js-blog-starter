@@ -1,36 +1,39 @@
 <section id="main" class="container">
   <div class="content">
     <section class="posts">
+      <% posts.forEach(function(post) { %>
       <article class="post block">
         <h2 class="title">
-          <a href="/post/">Grunt GUI 工具： Spock</a>
+          <a href="/post/<%= post.slug %>"><%= post.title %></a>
         </h2>
         <div class="meta">
-          <time>2014年2月20日</time>
+          <time datetime="<%= post.created %>"><%= locals.moment(post.created).format("YYYY-MM-DD") %></time>
         </div>
-        <div class="entry"><p>在大家纷纷推出各种工具的 CLI 版本时，Spock 在这里显得有点格格不入，但我确实喜爱一目了然的 GUI 界面多一些。</p>
-<p>一个原因是：搞 “外包” 并行项目太多，一次可能跑着好几个 Grunt Watch 。 </p>
-<p>还有一个原因或许是 Windows 下的命令行太挫了，虽然有了 <a href="http://bliker.github.io/cmder/">Cmder</a> 后这个情况改善了好多。</p>
-<p><img src="http://ww2.sinaimg.cn/mw690/49d6143agw1edprblqcybj20dm0beq3d.jpg" alt=""></p>
-<p>当然，你想看任务运行的详细过程也是可以的：</p>
-<div class="ReadMore"><a href="/post/">[阅读更多]</a></div></div>
+        <div class="entry"><%- post.content %></div>
       </article>
+      <% }) %>
       <div class="navigation block">
         <table width='100%'>
           <tbody>
             <tr>
               <td width='120' align='left'>
-                
+                <% if (0 !== previousPage) { %>
+                <div class="alignright">
+                  <a href="/p/<%= previousPage %>">上一页</a>
+                </div>
+                <% } %>
               </td>
               <td width='auto' align='center'>
                 <strong class="fade">
-                  1/20
+                  <%= currentPage %>/<%= maxPage %>
                 </strong>
               </td>
               <td width='120' align='right'>
+                <% if (0 !== nextPage) { %>
                 <div class="alignright">
-                  <a href="/page/2">下一页</a>
+                  <a href="/p/<%= nextPage %>">下一页</a>
                 </div>
+                <% } %>
               </td>
             </tr>
           </tbody>

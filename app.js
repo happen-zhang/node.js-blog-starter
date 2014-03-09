@@ -39,6 +39,12 @@ app.use(express.favicon(faviconPath));
 // bodyParser
 app.use(express.bodyParser());
 
+/**
+ * helper
+ */
+
+app.locals.moment= require('moment');
+
 // 路由
 route.handle(app);
 
