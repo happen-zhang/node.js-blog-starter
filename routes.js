@@ -9,7 +9,7 @@ exports.handle = function(app) {
   app.get('/', blog.index, exceptionHandler);
   app.get(/^\/p\/(\d+)$/, blog.index, exceptionHandler);
   app.get('/post/:slug', blog.post, exceptionHandler);
-  app.get('/tag', blog.tag, exceptionHandler);
+  app.get('/tag/:tag', blog.tag, exceptionHandler);
   app.get('/archives', blog.archives, exceptionHandler);
   app.get('/links', blog.links, exceptionHandler);
   app.get('/about', blog.about, exceptionHandler);

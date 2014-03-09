@@ -57,4 +57,9 @@ PostSchema.static('findBySlug', function(slug, fields, callback) {
   return this.find({ slug: slug }, fields, null, callback);
 });
 
+// findByTag
+PostSchema.static('findByTag', function(tag, fields, callback) {
+  return this.find({ 'tags.name': tag }, fields, null, callback);
+});
+
 module.exports = mongoose.model('Post', PostSchema);

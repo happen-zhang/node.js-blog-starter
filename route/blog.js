@@ -90,13 +90,21 @@ exports.post = function(req, res, exceptionHandler) {
 };
 
 // 标签页
-exports.tag = function(req, res, next) {
-  var data = {
-    title: config.blogname,
-    blogname: config.blogname
-  }
+exports.tag = function(req, res, exceptionHandler) {
+  Post.findByTag(req.params.tag, 'title slug created', function(err, posts) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
 
-  res.render('blog/tag', data);
+    var data = {
+      title: config.blogname + ' | ' + req.params.tag,
+      blogname: config.blogname,
+      posts: posts,
+      tag: req.params.tag
+    }
+
+    res.render('blog/tag', data);
+  });
 };
 
 // 归档页

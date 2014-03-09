@@ -1,12 +1,14 @@
 <section id="main" class="container tags">
   <div class="content">
     <section class="block">
-      <h1 class="title">标签：node-webkit</h1>
+      <h1 class="title">标签：<%= tag %></h1>
       <article>
+        <% posts.forEach(function(post) { %>
         <h2>
-          <time>2014年2月20日</time>
-          <a href="/post/">Grunt GUI 工具： Spock</a>
+          <time><%= locals.moment(post.created).format('YYYY-MM-DD') %></time>
+          <a href="/post/<%= post.slug %>"><%= post.title %></a>
         </h2>
+        <% }); %>
       </article>
     </section>
   </div>

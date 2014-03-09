@@ -11,8 +11,6 @@ var mongoose = require('mongoose');
 var TagSchema = new mongoose.Schema({
   // 名称
   name: String,
-  // slugify
-  slug: String,  
   // 创建时间
   created: { type: Date, default: Date.now },
   // 更新时间
