@@ -5,13 +5,14 @@
 var blog = require('./route/blog');
 var admin = require('./route/admin');
 
-module.exports = function(app) {
-  app.get('/', blog.index);
-  app.get('/post', blog.post);
-  app.get('/tag', blog.tag);
-  app.get('/archives', blog.archives);
-  app.get('/links', blog.links);
-  app.get('/about', blog.about);
+exports.handle = function(app) {
+  app.get('/', blog.index, exceptionHandler);
+  app.get(/^\/p\/(\d+)$/, blog.index, exceptionHandler);
+  app.get('/post', blog.post, exceptionHandler);
+  app.get('/tag', blog.tag, exceptionHandler);
+  app.get('/archives', blog.archives, exceptionHandler);
+  app.get('/links', blog.links, exceptionHandler);
+  app.get('/about', blog.about, exceptionHandler);
 
   app.get('/admin', admin.login);
   app.get('/admin/home', admin.index);
@@ -25,3 +26,20 @@ module.exports = function(app) {
   app.get('/admin/comment', admin.commentIndex);
   app.get('/admin/verifyAkismet', admin.verifyAkismet);
 };
+
+exports.handleNotFound = function(req, res) {
+  res.status(404);
+  res.render('blog/public/404.html');
+};
+
+exports.handleError = function(err, req, res, next) {
+  res.status(500);
+  res.render('blog/public/500.html');
+};
+
+var exceptionHandler = function() {
+  return {
+    handleNotFound: exports.handleNotFound,
+    handleError: exports.handleError
+  };
+}

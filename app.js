@@ -27,7 +27,7 @@ app.engine('.html', require('ejs').__express);
 app.set('view engine', 'html');
 
 /**
- * mideware
+ * midware
  */
 
 // static assets
@@ -39,6 +39,9 @@ app.use(express.favicon(faviconPath));
 // bodyParser
 app.use(express.bodyParser());
 
+// 路由
+route.handle(app);
+
 // 开发环境
 if ('development' == app.get('env')) {
   app.use(express.errorHandler({
@@ -49,12 +52,19 @@ if ('development' == app.get('env')) {
 
 // 生产环境
 if ('production' == app.get('env')) {
-  app.use(express.errorHandler());
+  // 404
+  app.use(function handleNotFound(req, res) {
+    route.handleNotFound(req, res);
+  });
+
+  // 500
+  app.use(function handlerError(err, req, res, next) {
+    route.handleNotFound(err, req, res, next);
+  });
+
+  // 视图缓存
   app.set('view cache', true);
 }
-
-// 路由
-route(app);
 
 // 端口号
 app.listen(3000);
