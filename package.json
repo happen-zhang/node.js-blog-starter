@@ -6,7 +6,8 @@
   "author": "happen-Zhang <zhanghaipeng404@gmail.com>",
   "description": "a simple nodejs blog program",
   "scripts": {
-    "start": "node app"
+    "start": "node app",
+    "test": "mocha"
   },
   "engines": {
     "node": "0.10.x",
@@ -18,5 +19,9 @@
     "express-partials": "~0.1.1",
     "mongoose": "3.8.8",
     "moment": "2.5.1"
+  },
+  "devDependencies": {
+    "mocha": "1.17.1",
+    "chai": "1.9.0"
   }
 }
