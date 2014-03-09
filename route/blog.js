@@ -4,6 +4,7 @@
 
 var config = require('../config').config;
 var Post = require('../models/post');
+var Link = require('../models/link');
 
 // 首页
 exports.index = function(req, res, exceptionHandler) {
@@ -118,13 +119,20 @@ exports.archives = function(req, res, next) {
 };
 
 // 友情链接
-exports.links = function(req, res, next) {
-  var data = {
-    title: config.blogname,
-    blogname: config.blogname
-  }
+exports.links = function(req, res, exceptionHandler) {
+  Link.findAll('name url description', function(err, links) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
 
-  res.render('blog/links', data);
+    var data = {
+      title: config.blogname + ' | ' + '友情链接',
+      blogname: config.blogname,
+      links: links
+    }
+
+    res.render('blog/links', data);
+  });
 };
 
 // 关于我

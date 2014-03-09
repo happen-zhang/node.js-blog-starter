@@ -13,10 +13,17 @@ var LinkSchema = new mongoose.Schema({
   name: String,
   // url
   url: String,
+  // 描述
+  description: String,
   // 创建时间
   created: { type: Date, default: Date.now },
   // 更新时间
   updated: { type: Date, default: Date.now }
+});
+
+// findAll
+LinkSchema.static('findAll', function(fields, callback) {
+  return this.find(null, fields, null, callback);
 });
 
 module.exports = mongoose.model('Link', LinkSchema);

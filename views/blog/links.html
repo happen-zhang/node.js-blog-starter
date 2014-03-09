@@ -1,29 +1,14 @@
-    <div id="main" class="container page">
+<div id="main" class="container page">
   <div class="content">
     <article class="post block">
-      <h1 class="title">有情链接</h1>
-      <div class="entry"><ul>
-<li><a href="http://www.acterce.com/" target="_blank">Acterce</a>  <span>哥、领路人、良师益友 &lt;- 到PNG掏鸟屎去了</span></li>
-<li><a href="http://fanxu.me/" target="_blank">樊旭</a>  <span>每天一股浓浓的城里人下乡的得瑟味！</span></li>
-<li><a href="http://bigc.at/" target="_blank">大猫</a>  <span>目测最淫荡 &lt;- IDEA之神</span></li>
-<li><a href="http://himeters.com/" target="_blank">meterscao</a>  <span>操！&lt;- 姓“敖”</span></li>
-<li><a href="http://autumn.im/" target="_blank">Autumn</a>  <span>小秋秋！</span></li>
-<li><a href="http://hzlzh.io/" target="_blank">自力</a>  <span>折腾小王子 &lt;- 脑残果粉</span></li>
-<li><a href="http://blog.francistm.com/" target="_blank">Francis.TM</a>  <span>神一样的弗总 &lt;- 这货当民工去了</span></li>
-<li><a href="http://www.77qiqi.com/blog/" target="_blank">飞羽姐</a>  <span> 是萝莉音哦！</span></li>
-<li><a href="http://hily.me/blog/" target="_blank">江林锦</a>  <span>牛X人物</span></li>
-<li><a href="http://eli.im" target="_blank">Eli Lien</a>  <span>Eli&#39;s Blog</span></li>
-<li><a href="http://www.prower.cn/" target="_blank">Prower</a>  <span>摄神的博客</span></li>
-<li><a href="http://www.cnblogs.com/willbin/" target="_blank">未有彬</a>  <span>二哥为有B！</span></li>
-<li><a href="http://ycinn.com/" target="_blank">Cinn</a>  <span>昕昕小技师 &lt;- 用“废物”画画</span></li>
-<li><a href="http://www.h4ck.ws" target="_blank">猥琐教授</a>  <span>整天在火星研究院瞎BB</span></li>
-<li><a href="http://ieqi.net/" target="_blank">G_will</a>  <span>郭老师不在实验室里搞基了</span></li>
-<li><a href="http://hoperce.com/" target="_blank">涟漪</a>  <span>家养小驴子 &lt;- 一只蠢驴</span></li>
-<li><a href="http://miaoz.me/blog/" target="_blank">贰心纪事</a>  <span>易邈之</span></li>
-<li><a href="http://clyee.com/blog/" target="_blank">Clyee</a>  <span>中文名和英文名发音一样的克林</span></li>
-<li><a href="http://blog.specode.org/" target="_blank">Specode</a>  <span>小锅童鞋，VIM用得烂死了，装逼的极客。 &lt;- 同步一号不靠谱</span></li>
-</ul>
-</div>
+      <h1 class="title">友情链接</h1>
+      <div class="entry">
+      	<ul>
+      	  <% links.forEach(function(link) { %>
+          <li><a href="<%= link.url %>" target="_blank"><%= link.name %></a>  <span><%= link.description %></span></li>
+          <% }); %>
+        </ul>
+      </div>
     </article>
   </div>
 </div>
