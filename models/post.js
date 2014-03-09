@@ -28,6 +28,16 @@ var PostSchema = new mongoose.Schema({
   updated: { type: Date, default: Date.now }
 });
 
+// define a virtual field
+PostSchema.virtual('briefContent').get(function() {
+  var more = this.content.indexOf('<!--more-->');
+  if (more > 0) {
+    return this.content.substr(0, more);
+  }
+
+  return '';
+});
+
 PostSchema.static('findAll', function (skip, limit, fields, callback) {
   var options = {
     skip: skip,

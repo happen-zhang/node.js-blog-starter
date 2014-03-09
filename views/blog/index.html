@@ -9,7 +9,16 @@
         <div class="meta">
           <time datetime="<%= post.created %>"><%= locals.moment(post.created).format("YYYY-MM-DD") %></time>
         </div>
+        <% if ('' === post.briefContent) { %>
         <div class="entry"><%- post.content %></div>
+        <% } else { %>
+        <div class="entry">
+          <!-- Brief -->
+          <%- post.briefContent %>
+          <!-- More -->
+          <div class="ReadMore"><a href="/post/<%= post.slug %>">[阅读更多]</a></div>
+        </div>
+        <% } %>
       </article>
       <% }) %>
       <div class="navigation block">
