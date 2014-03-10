@@ -10,7 +10,6 @@ var Tag = require('./tag');
 /**
  * 文章模型
  */
-
 var PostSchema = new mongoose.Schema({
   // 标题
   title: String,
@@ -23,12 +22,21 @@ var PostSchema = new mongoose.Schema({
   // 标签
   tags: [Tag.schema],
   // 创建时间
-  created: { type: Date, default: Date.now },
+  created: {
+    type: Date,
+    default: Date.now
+  },
   // 更新时间
-  updated: { type: Date, default: Date.now }
+  updated: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-// define a virtual field
+/**
+ * briefContent
+ * @return string
+ */
 PostSchema.virtual('briefContent').get(function() {
   var more = this.content.indexOf('<!--more-->');
   if (more > 0) {
@@ -38,7 +46,14 @@ PostSchema.virtual('briefContent').get(function() {
   return '';
 });
 
-// findAll
+/**
+ * 得到post数据
+ * @param  int   skip
+ * @param  int   limit
+ * @param  string   fields
+ * @param  Function callback
+ * @return
+ */
 PostSchema.static('findAll', function(skip, limit, fields, callback) {
   var options = {
     skip: skip,
@@ -52,16 +67,35 @@ PostSchema.static('findAll', function(skip, limit, fields, callback) {
   return this.find(null, fields, options, callback);
 });
 
-// findBySlug
+/**
+ * 按slug得到post
+ * @param  string   slug
+ * @param  string   fields
+ * @param  Function callback
+ * @return
+ */
 PostSchema.static('findBySlug', function(slug, fields, callback) {
   return this.find({ slug: slug }, fields, null, callback);
 });
 
-// findByTag
+/**
+ * 按tag得到post
+ * @param  string   tag
+ * @param  string   fields
+ * @param  Function callback
+ * @return
+ */
 PostSchema.static('findByTag', function(tag, fields, callback) {
   return this.find({ 'tags.name': tag }, fields, null, callback);
 });
 
+/**
+ * 添加评论到指定id的post
+ * @param  int   id
+ * @param  Comment   comment
+ * @param  Function callback
+ * @return
+ */
 PostSchema.static('addCommentById', function(id, comment, callback) {
   return this.update({ _id: id }, { $push: { comments: comment } }, callback);
 });

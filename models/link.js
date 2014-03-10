@@ -7,7 +7,6 @@ var mongoose = require('mongoose');
 /**
  * 友情链接模型
  */
-
 var LinkSchema = new mongoose.Schema({
   // 名称
   name: String,
@@ -16,12 +15,23 @@ var LinkSchema = new mongoose.Schema({
   // 描述
   description: String,
   // 创建时间
-  created: { type: Date, default: Date.now },
+  created: {
+    type: Date,
+    default: Date.now
+  },
   // 更新时间
-  updated: { type: Date, default: Date.now }
+  updated: {
+    type: Date,
+    default: Date.now
+  }
 });
 
-// findAll
+/**
+ * 得到所有的友情链接
+ * @param  string   fields
+ * @param  Function callback
+ * @return
+ */
 LinkSchema.static('findAll', function(fields, callback) {
   return this.find(null, fields, null, callback);
 });

@@ -4,6 +4,11 @@
 
 var crypto = require('crypto');
 
+/**
+ * 生成mongodb url
+ * @param  Object config
+ * @return string
+ */
 exports.generateMongoUrl = function(config) {
   host = (config.host || 'localhost');
   port = (config.port || 27017);
