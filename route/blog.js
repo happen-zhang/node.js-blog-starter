@@ -4,7 +4,7 @@
 
 var moment = require('moment');
 
-var config = require('../config').config;
+var blogConfig = require('../config').blogConfig;
 var Post = require('../models/post');
 var Link = require('../models/link');
 
@@ -21,7 +21,7 @@ exports.index = function(req, res, exceptionHandler) {
     }
 
     // 分页
-    var listRows = config.listRows;
+    var listRows = blogConfig.listRows;
     var maxPage = parseInt(count / listRows) + ((count % listRows) ? 1 : 0);
     // get /p/(+d) 当前页
     var currentPage = 1;
@@ -56,8 +56,8 @@ exports.index = function(req, res, exceptionHandler) {
       }
 
       var data = {
-        title: config.blogname,
-        blogname: config.blogname,
+        title: blogConfig.blogname,
+        blogname: blogConfig.blogname,
         posts: posts,
         maxPage: maxPage,
         currentPage: currentPage,
@@ -83,8 +83,8 @@ exports.post = function(req, res, exceptionHandler) {
 
     var post = posts[0];
     var data = {
-      title: config.blogname + ' | ' + post.title,
-      blogname: config.blogname,
+      title: blogConfig.blogname + ' | ' + post.title,
+      blogname: blogConfig.blogname,
       post: post
     }
 
@@ -100,8 +100,8 @@ exports.tag = function(req, res, exceptionHandler) {
     }
 
     var data = {
-      title: config.blogname + ' | ' + req.params.tag,
-      blogname: config.blogname,
+      title: blogConfig.blogname + ' | ' + req.params.tag,
+      blogname: blogConfig.blogname,
       posts: posts,
       tag: req.params.tag
     }
@@ -138,8 +138,8 @@ exports.archives = function(req, res, exceptionHandler) {
     archivesList = archivesList.sort(compare);
 
     var data = {
-      title: config.blogname + ' | ' + '文章存档',
-      blogname: config.blogname,
+      title: blogConfig.blogname + ' | ' + '文章存档',
+      blogname: blogConfig.blogname,
       archivesList: archivesList
     };
 
@@ -155,8 +155,8 @@ exports.links = function(req, res, exceptionHandler) {
     }
 
     var data = {
-      title: config.blogname + ' | ' + '友情链接',
-      blogname: config.blogname,
+      title: blogConfig.blogname + ' | ' + '友情链接',
+      blogname: blogConfig.blogname,
       links: links
     }
 
@@ -167,8 +167,8 @@ exports.links = function(req, res, exceptionHandler) {
 // 关于我
 exports.about = function(req, res, next) {
   var data = {
-    title: config.blogname,
-    blogname: config.blogname
+    title: blogConfig.blogname,
+    blogname: blogConfig.blogname
   }
 
   res.render('blog/about', data);

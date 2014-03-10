@@ -2,7 +2,12 @@
  * /config/db_config.js
  */
 
-var dbConfig = {
+var mongoose = require('mongoose');
+
+// util
+var util = require('../libs/util');
+
+var config = {
   host: 'localhost',
   port: 27017,
   name: 'blog',
@@ -10,4 +15,10 @@ var dbConfig = {
   password: ''
 }
 
-module.exports = dbConfig;
+// mongodb url
+var mongoUrl = util.generateMongoUrl(config);
+
+// connect to mongodb
+mongoose.connect(mongoUrl);
+
+module.exports = config;

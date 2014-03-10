@@ -4,7 +4,7 @@
 
 var express = require('express');
 var partials = require('express-partials');
-var config = require('./config').config;
+var blogConfig = require('./config').blogConfig;
 var route = require('./routes');
 
 var app = express();
@@ -19,7 +19,7 @@ var faviconPath = staticDir + 'images/favicon.ico';
  * setting 
  */
 
-app.set('port', config.port);
+app.set('port', blogConfig.port);
 app.set('views', viewsDir);
 // app.set('view engine', 'ejs');
 // 更改模板引擎
