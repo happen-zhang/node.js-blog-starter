@@ -9,7 +9,9 @@ var config = {
   // 分页行数
   listRows: 5,
   // 访问端口
-  port: 3000
+  port: 3000,
+  // session secret
+  sessionSecret: '560b9047'
 };
 
 module.exports = config;

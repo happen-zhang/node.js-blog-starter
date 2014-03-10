@@ -4,8 +4,13 @@
 
 var express = require('express');
 var partials = require('express-partials');
+var MongoStore = require('connect-mongo')(express);
+
 var blogConfig = require('./config').blogConfig;
+var dbConfig = require('./config').dbConfig;
 var route = require('./routes');
+
+var util = require('./libs/util');
 
 var app = express();
 // 静态文件目录
@@ -38,6 +43,15 @@ app.use(partials());
 app.use(express.favicon(faviconPath));
 // bodyParser
 app.use(express.bodyParser());
+// cookieParser
+app.use(express.cookieParser());
+// session
+app.use(express.session({
+  secret: blogConfig.sessionSecret,
+  store: new MongoStore({
+    url: util.generateMongoUrl(dbConfig)
+  })
+}));
 
 /**
  * helper
