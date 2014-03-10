@@ -36,12 +36,12 @@ var CommentSchema = new mongoose.Schema({
   email: {
     type: String,
     required: '{PATH} is required!',
-    validate: [emailReg, '{PATH} is not the right one!']
+    validate: [emailReg, '{PATH} was incorrectly formed!']
   },
   // 网站
   website: {
     type: String,
-    validate: [websiteValidation, '{PATH} is not the right one!']
+    validate: [websiteValidation, '{PATH} was incorrectly formed!']
   },
   // 内容
   content: {

@@ -106,14 +106,15 @@ exports.post = function(req, res, exceptionHandler) {
 exports.comment = function(req, res, exceptionHandler) {
   var id = req.body.id;
   var slug = req.body.slug;
+  var referer = req.headers['referer'];
 
   // 防自动提交
   if (!id
       || !slug
       || !req.body.token
       || req.body.token !== req.session.token
-      || !req.headers['referer']
-      || req.headers['referer'].indexOf(slug) <= 0) {
+      || !referer
+      || referer.indexOf(slug) <= 0) {
     return exceptionHandler().handleNotFound(req, res);
   }
 
@@ -128,14 +129,24 @@ exports.comment = function(req, res, exceptionHandler) {
   // 验证数据是否正确
   comment.validate(function(err) {
     if (err) {
-      console.log(err);
-      return exceptionHandler().handleError(err, req, res);
+      // 取出验证错误的信息
+      var messages = [];
+      for (var error in err.errors) {
+        messages.push(err.errors[error].message);
+      }
+
+      var data = {
+        messages: messages,
+        back: '/post/' + slug
+      };
+
+      return res.render('blog/public/error', data);
     }
 
     // 添加一个评论到post
     Post.addCommentById(id ,comment, function(err,numberAffected, raw) {
       if (err) {
-        console.log(err);
+        return exceptionHandler().handleError(err, req, res);
       }
 
       res.redirect('/post/' + slug);
