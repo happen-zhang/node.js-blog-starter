@@ -239,12 +239,12 @@ exports.about = function(req, res, next) {
 // 订阅
 exports.feed = function(req, res, exceptionHandler) {
   if ('undefined' === typeof rssConfig) {
-    exceptionHandler().handleNotFound(req, res);
+    return exceptionHandler().handleNotFound(req, res);
   }
 
   Post.findAll(0, parseInt(rssConfig.rssRows), null, function(err, posts) {
     if (err) {
-      exceptionHandler().handleError(err, req, res);
+      return exceptionHandler().handleError(err, req, res);
     }
 
     var rssObject = {
