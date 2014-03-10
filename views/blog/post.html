@@ -35,7 +35,7 @@
               <time datetime='<%= comment.created %>'><%= locals.moment(comment.created).format('YYYY-MM-DD HH:mm') %></time>
               <div class="floor"><%= i + 1 %></div>
             </div>
-            <div id="commentbody-53684" class='description' itemprop='description'><%= comment.content %></div>
+            <div id="commentbody-53684" class='description' itemprop='description'><%- locals.marked(comment.content) %></div>
           </div>
         </li>
         <% }); %>

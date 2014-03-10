@@ -59,6 +59,7 @@ app.use(express.session({
 
 app.locals.moment= require('moment');
 app.locals.gravatar = require('gravatar');
+app.locals.marked = require('./config/marked_config');
 
 // 路由
 route.handle(app);
