@@ -4,23 +4,60 @@
 
 var mongoose = require('mongoose');
 
+
+// email正则
+var emailReg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+/**
+ * website验证器
+ * @param  string url 需验证的url
+ * @return boolean
+ */
+var websiteValidation = function(url) {
+  if (!url) {
+    return true;
+  }
+
+  var urlReg = /[a-zA-z]+:\/\/[^\s]*/;
+
+  return urlReg.test(url);
+}
+
 /**
  * 评论模型
  */
-
 var CommentSchema = new mongoose.Schema({
   // 评论者
-  author: String,
+  author: {
+    type: String,
+    required: '{PATH} is required!'
+  },
   // 邮箱
-  email: String,
+  email: {
+    type: String,
+    required: '{PATH} is required!',
+    validate: [emailReg, '{PATH} is not the right one!']
+  },
   // 网站
-  website: String,
+  website: {
+    type: String,
+    validate: [websiteValidation, '{PATH} is not the right one!']
+  },
   // 内容
-  content: String,
+  content: {
+    type: String,
+    required: '{PATH} is required!'
+  },
   // 创建时间
-  created: { type: Date, default: Date.now },
+  created: {
+    type: Date,
+    default: Date.now
+  },
   // 更新时间
-  updated: { type: Date, default: Date.now }
+  updated: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 module.exports = mongoose.model('Comment', CommentSchema);
