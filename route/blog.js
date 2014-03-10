@@ -3,8 +3,10 @@
  */
 
 var moment = require('moment');
+var data2xml = require('data2xml');
 
 var blogConfig = require('../config').blogConfig;
+var rssConfig = require('../config').rssConfig;
 var Post = require('../models/post');
 var Link = require('../models/link');
 
@@ -173,3 +175,51 @@ exports.about = function(req, res, next) {
 
   res.render('blog/about', data);
 };
+
+// 订阅
+exports.feed = function(req, res, exceptionHandler) {
+  if ('undefined' === typeof rssConfig) {
+    exceptionHandler().handleNotFound(req, res);
+  }
+
+  Post.findAll(0, parseInt(rssConfig.rssRows), null, function(err, posts) {
+    if (err) {
+      exceptionHandler().handleError(err, req, res);
+    }
+
+    var rssObject = {
+      _attr: { version: '2.0' },
+      channel: {
+        title: rssConfig.title,
+        description: rssConfig.description,
+        link: rssConfig.link,
+        language: rssConfig.language,
+        managingEditor: rssConfig.language,
+        webMaster: rssConfig.webMaster,
+        generator: rssConfig.generator,
+        items: []
+      }
+    };
+
+    // 添加post到rss列表中
+    posts.forEach(function(post) {
+      rssObject.channel.items.push({
+        title: post.title,
+        author: {
+          name: rssConfig.author.name
+        },
+        link: rssConfig.link + '/post/' + post.slug,
+        guid: rssConfig.link + '/post/' + post.slug,
+        pubDate: moment(post.created).format('YYYY-MM-DD'),
+        lastBuildDate: moment(post.updated).format('YYYY-MM-DD'),
+        description: post.content
+      });
+    });
+
+    // 转成xml格式
+    var rssContent = data2xml({})('rss', rssObject);
+    // xml
+    res.contentType('application/xml');
+    res.send(rssContent);
+  });
+}

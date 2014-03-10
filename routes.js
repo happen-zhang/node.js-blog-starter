@@ -13,6 +13,7 @@ exports.handle = function(app) {
   app.get('/archives', blog.archives, exceptionHandler);
   app.get('/links', blog.links, exceptionHandler);
   app.get('/about', blog.about, exceptionHandler);
+  app.get('/feed', blog.feed, exceptionHandler);
 
   app.get('/admin', admin.login);
   app.get('/admin/home', admin.index);
