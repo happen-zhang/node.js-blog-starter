@@ -10,3 +10,6 @@ exports.dbConfig = require('./config/db_config');
 
 // rss configuration
 exports.rssConfig = require('./config/rss_config');
+
+// marked configuration
+exports.markedConfig = require('./config/marked_config');
