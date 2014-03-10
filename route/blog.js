@@ -7,8 +7,12 @@ var data2xml = require('data2xml');
 
 var blogConfig = require('../config').blogConfig;
 var rssConfig = require('../config').rssConfig;
+
 var Post = require('../models/post');
+var Comment = require('../models/comment');
 var Link = require('../models/link');
+
+var util = require('../libs/util');
 
 // 首页
 exports.index = function(req, res, exceptionHandler) {
@@ -83,14 +87,59 @@ exports.post = function(req, res, exceptionHandler) {
       return exceptionHandler().handleNotFound(req, res);
     }
 
+    // 生成token
+    var token = util.generateToken();
+    req.session.token = token;
     var post = posts[0];
     var data = {
       title: blogConfig.blogname + ' | ' + post.title,
       blogname: blogConfig.blogname,
-      post: post
+      post: post,
+      token: token
     }
 
     res.render('blog/post', data);    
+  });
+};
+
+// 评论
+exports.comment = function(req, res, exceptionHandler) {
+  var id = req.body.id;
+  var slug = req.body.slug;
+
+  // 防自动提交
+  if (!id
+      || !slug
+      || !req.body.token
+      || req.body.token !== req.session.token
+      || !req.headers['referer']
+      || req.headers['referer'].indexOf(slug) <= 0) {
+    return exceptionHandler().handleNotFound(req, res);
+  }
+
+  // 销毁token
+  req.session.token = null;
+
+  var comment = new Comment({ author: req.body.author,
+                              email: req.body.email,
+                              website: req.body.website,
+                              content: req.body.content });
+
+  // 验证数据是否正确
+  comment.validate(function(err) {
+    if (err) {
+      console.log(err);
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    // 添加一个评论到post
+    Post.addCommentById(id ,comment, function(err,numberAffected, raw) {
+      if (err) {
+        console.log(err);
+      }
+
+      res.redirect('/post/' + slug);
+    });
   });
 };
 

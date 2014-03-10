@@ -2,6 +2,8 @@
  * /libs/util.js
  */
 
+var crypto = require('crypto');
+
 exports.generateMongoUrl = function(config) {
   host = (config.host || 'localhost');
   port = (config.port || 27017);
@@ -14,4 +16,15 @@ exports.generateMongoUrl = function(config) {
   }
 
   return 'mongodb://' + user + target;
+};
+
+/**
+ * 生成token值
+ * @return string
+ */
+exports.generateToken = function() {
+  var currentDate = (new Date()).valueOf().toString();
+  var random = Math.random().toString();
+
+  return crypto.createHash('sha1').update(currentDate + random).digest('hex');
 };

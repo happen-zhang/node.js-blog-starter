@@ -62,4 +62,8 @@ PostSchema.static('findByTag', function(tag, fields, callback) {
   return this.find({ 'tags.name': tag }, fields, null, callback);
 });
 
+PostSchema.static('addCommentById', function(id, comment, callback) {
+  return this.update({ _id: id }, { $push: { comments: comment } }, callback);
+});
+
 module.exports = mongoose.model('Post', PostSchema);

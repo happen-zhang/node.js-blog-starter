@@ -27,7 +27,7 @@
           <img src="<%= locals.gravatar.url(comment.email, { s: '36', r: 'pg', d: 'mm' }) %>" width='36' height='36' class='avatar' alt="">
           <div class="content">
             <div class="info">
-              <% if ("undefined" === typeof comment.website) { %>
+              <% if (!comment.website) { %>
               <span class="reviewer"><%= comment.author %></span>
               <% } else { %>
               <a href="<%= comment.website %>" class="reviewer" url='external nofollow'><%= comment.author %></a>
@@ -47,25 +47,25 @@
         <div id="respond" class="clearfix">
           <div id="reviewer-info">
             <div class="row">
-              <input type="text" name='a_uthor' value='' size='24' tabindex='1' required='' id="author"
-                     class="textfield">
+              <input type="text" name='author' value='' size='24' tabindex='1' required='' id="author" class="textfield">
               <label for="author" class="small">Name (required)</label>
             </div>
             <div class="row">
-              <input type="text" name='e_mail' value='' size='24' tabindex='2' required='' id="email" class="textfield">
+              <input type="text" name='email' value='' size='24' tabindex='2' required='' id="email" class="textfield">
               <label for="email" class="small">E-mail (required)</label>
             </div>
             <div class="row">
-              <input type="text" name='u_rl' value='' size='24' tabindex='3' id="url" class="textfield">
+              <input type="text" name='website' value='' size='24' tabindex='3' id="url" class="textfield">
               <label for="url" class="small">Website</label>
             </div>
             <div class="row">
-              <textarea name="c_ontent" id="comment" cols="50" rows="7" tabindex='4'></textarea>
+              <textarea name="content" id="comment" cols="50" rows="7" tabindex='4'></textarea>
             </div>
             <div class="row">
               <input id="comment-submit" name='submit' type='submit' tabindex='5' value='Post Comment' class="button">
               <input type="hidden" name='id' value='<%= post._id %>'>
               <input type="hidden" name='slug' value='<%= post.slug %>'>
+              <input type="hidden" name='token' value='<%= token %>'>
             </div>
           </div>
         </div>
