@@ -21,7 +21,7 @@ exports.index = function(req, res, exceptionHandler) {
     }
 
     // 分页
-    var listRows = blogConfig.listRows;
+    var listRows = parseInt(blogConfig.listRows);
     var maxPage = parseInt(count / listRows) + ((count % listRows) ? 1 : 0);
     // get /p/(+d) 当前页
     var currentPage = 1;
