@@ -3,7 +3,7 @@
     <article class="post block">
       <h1 class="title"><%= post.title %></h1>
       <div class="meta"><time datetime="<%= post.created %>"><%= locals.moment(post.created).format('YYYY-MM-DD') %></time></div>
-      <div class="entry"><%- post.content %></div>
+      <div class="entry"><%- locals.marked(post.content) %></div>
       <div class="tags">
         <p>
           <% if (0 !== post.tags.length) { %>
