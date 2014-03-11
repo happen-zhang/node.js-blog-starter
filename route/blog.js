@@ -133,10 +133,6 @@ exports.comment = function(req, res, exceptionHandler) {
                               website: req.body.website,
                               content: req.body.content,
                               authorIp: req.ip });
-
-  console.log(comment);
-
-
   // 验证数据是否正确
   comment.validate(function(err) {
     if (err) {

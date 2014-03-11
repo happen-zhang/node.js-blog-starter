@@ -18,7 +18,7 @@ var websiteValidation = function(url) {
     return true;
   }
 
-  var urlReg = /[a-zA-z]+:\/\/[^\s]*/;
+  var urlReg = /http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w\- .\/?%&=]*)?/;
 
   return urlReg.test(url);
 }
