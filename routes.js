@@ -19,16 +19,16 @@ exports.handle = function(app) {
   app.get('/admin', admin.login);
   app.post('/admin', admin.doLogin, exceptionHandler);
   app.get('/admin/logout', admin.authAdmin, admin.logout);
-  app.get('/admin/home', admin.home);
+  app.get('/admin/home', admin.authAdmin, admin.home);
   app.get('/admin/install', admin.install);
-  app.get('/admin/page', admin.pageIndex);
-  app.get('/admin/page/edit', admin.pageEdit);
-  app.get('/admin/page/write', admin.pageWrite);
-  app.get('/admin/post', admin.postIndex);
-  app.get('/admin/post/edit', admin.postEdit);
-  app.get('/admin/post/write', admin.postWrite);
-  app.get('/admin/comment', admin.commentIndex);
-  app.get('/admin/verifyAkismet', admin.verifyAkismet);
+  app.get('/admin/page', admin.authAdmin, admin.pageIndex);
+  app.get('/admin/page/edit', admin.authAdmin, admin.pageEdit);
+  app.get('/admin/page/write', admin.authAdmin, admin.pageWrite);
+  app.get('/admin/post', admin.authAdmin, admin.postIndex);
+  app.get('/admin/post/edit', admin.authAdmin, admin.postEdit);
+  app.get('/admin/post/write', admin.authAdmin, admin.postWrite);
+  app.get('/admin/comment', admin.authAdmin, admin.commentIndex);
+  app.get('/admin/verifyAkismet', admin.authAdmin, admin.verifyAkismet);
 
   app.get('/admin/add/:token', admin.add, exceptionHandler);
   app.post('/admin/create', admin.create, exceptionHandler);
