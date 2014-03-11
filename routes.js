@@ -17,7 +17,7 @@ exports.handle = function(app) {
   app.get('/feed', blog.feed, exceptionHandler);
 
   app.get('/admin', admin.login);
-  app.get('/admin/home', admin.index);
+  app.get('/admin/home', admin.home);
   app.get('/admin/install', admin.install);
   app.get('/admin/page', admin.pageIndex);
   app.get('/admin/page/edit', admin.pageEdit);

@@ -12,12 +12,12 @@ exports.login = function(req, res, next) {
   res.render('admin/login', data);
 };
 
-exports.index = function(req, res, next) {
+exports.home = function(req, res, next) {
   var data = {
     title: adminConfig.pageTitle
   }
 
-  res.render('admin/index', data);
+  res.render('admin/home', data);
 };
 
 exports.pageIndex = function(req, res, next) {
