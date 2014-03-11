@@ -16,3 +16,6 @@ exports.markedConfig = require('./config/marked_config');
 
 // akismet configuration
 exports.akismetConfig = require('./config/akismet_config');
+
+// admin configuration
+exports.adminConfig = require('./config/admin_config');

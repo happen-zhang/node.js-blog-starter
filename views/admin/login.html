@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-cn">
   <head>
-    <title>My Node.js Center</title>
+    <% include common/title.html %>
     <% include common/stylesheets.html %>
   </head>
   <body>
     <div class="mod_login">
       <header>
-        <h1 class="logo">My Node.js Center</h1>
+        <h1 class="logo"><%= title %></h1>
       </header>
       <div class="mod_login_main">
         <form method="GET" action="/admin/home" id="login-form">
