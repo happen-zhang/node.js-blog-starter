@@ -23,6 +23,7 @@
     <div id="comments" class="block">
       <ol class="commentlist">
         <% post.comments.forEach(function(comment, i) { %>
+        <%   if (false === comment.isSpam) { %>
         <li id='comment-<%= comment._id %>' class='comment clearfix'>
           <img src="<%= locals.gravatar.url(comment.email, { s: '36', r: 'pg', d: 'mm' }) %>" width='36' height='36' class='avatar' alt="">
           <div class="content">
@@ -38,6 +39,7 @@
             <div id="commentbody-53684" class='description' itemprop='description'><%- locals.marked(comment.content) %></div>
           </div>
         </li>
+        <%   } %>
         <% }); %>
       </ol>
     </div>

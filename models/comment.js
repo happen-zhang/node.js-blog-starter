@@ -48,6 +48,13 @@ var CommentSchema = new mongoose.Schema({
     type: String,
     required: '{PATH} is required!'
   },
+  // 评论者ip
+  authorIp: String,
+  // 是否垃圾评论
+  isSpam: {
+    type: Boolean,
+    default: false
+  },
   // 创建时间
   created: {
     type: Date,

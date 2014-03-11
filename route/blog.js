@@ -7,12 +7,19 @@ var data2xml = require('data2xml');
 
 var blogConfig = require('../config').blogConfig;
 var rssConfig = require('../config').rssConfig;
+var akismetConfig = require('../config').akismetConfig;
 
 var Post = require('../models/post');
 var Comment = require('../models/comment');
 var Link = require('../models/link');
 
 var util = require('../libs/util');
+
+// setting akismet client
+var akismet = require('akismet').client({
+  blog: akismetConfig.blog,
+  apiKey: akismetConfig.apiKey
+});
 
 // 首页
 exports.index = function(req, res, exceptionHandler) {
@@ -124,7 +131,11 @@ exports.comment = function(req, res, exceptionHandler) {
   var comment = new Comment({ author: req.body.author,
                               email: req.body.email,
                               website: req.body.website,
-                              content: req.body.content });
+                              content: req.body.content,
+                              authorIp: req.ip });
+
+  console.log(comment);
+
 
   // 验证数据是否正确
   comment.validate(function(err) {
@@ -141,6 +152,24 @@ exports.comment = function(req, res, exceptionHandler) {
       };
 
       return res.render('blog/public/error', data);
+    }
+
+    // 是否配置了akismet
+    if ('' !== akismetConfig.blog && '' !== akismetConfig.apiKey) {
+      akismet.checkSpam({
+        user_ip: comment.authorIp,
+        permalink: akismetConfig.blog + '/post/' + slug,
+        comment_author: comment.author,
+        comment_content: comment.content,
+        comment_author_email: comment.email,
+        comment_author_url: comment.website,
+        comment_type: "comment"
+      }, function(err, spam) {
+        if (spam) {
+          // 标记为垃圾评论
+          comment.isSpam = true;
+        }
+      });
     }
 
     // 添加一个评论到post

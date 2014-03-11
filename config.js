@@ -13,3 +13,6 @@ exports.rssConfig = require('./config/rss_config');
 
 // marked configuration
 exports.markedConfig = require('./config/marked_config');
+
+// akismet configuration
+exports.akismetConfig = require('./config/akismet_config');
