@@ -11,7 +11,9 @@ var config = {
   // 访问端口
   port: 3000,
   // session secret
-  sessionSecret: '560b9047'
+  sessionSecret: '560b9047',
+  // cookie max age 1 hour
+  cookieMaxAge: 3600000
 };
 
 module.exports = config;

@@ -48,6 +48,8 @@ app.use(express.cookieParser());
 // session
 app.use(express.session({
   secret: blogConfig.sessionSecret,
+  // 1 Hour
+  cookie: { maxAge: blogConfig.cookieMaxAge },
   store: new MongoStore({
     url: util.generateMongoUrl(dbConfig)
   })
