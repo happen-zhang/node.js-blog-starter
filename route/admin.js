@@ -94,8 +94,6 @@ exports.install = function(req, res, next) {
 exports.login = function(req, res, next) {
   // 已登录则重定向到home
   if (hasLogin(req)) {
-    var moment = require('moment');
-    console.log(moment('2014-03-25T11:12:12.697Z').format('YYYY-MM-DD-HH-mm-dd'));
     return res.redirect('/admin/home');
   }
 
@@ -129,7 +127,6 @@ exports.doLogin = function(req, res, exceptionHandler) {
     // 验证登陆
     Admin.getAuthenticated(loginname, password, function(err, admin, reason) {
       if (err) {
-        console.log(err);
         return exceptionHandler().handleError(err, req, res);
       }
 
@@ -159,6 +156,15 @@ exports.doLogin = function(req, res, exceptionHandler) {
       return renderError(res, '/admin', data);
     });
   });
+};
+
+/**
+ * 登出
+ */
+exports.logout = function(req, res) {
+  req.session.destroy();
+
+  res.redirect('/admin');
 };
 
 /**
