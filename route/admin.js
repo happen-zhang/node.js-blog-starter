@@ -5,6 +5,7 @@
 var adminConfig = require('../config').adminConfig;
 
 var Admin = require('../models/admin');
+var Post = require('../models/post');
 
 var util = require('../libs/util');
 
@@ -40,12 +41,22 @@ exports.pageWrite = function(req, res, next) {
   res.render('admin/page/write', data);
 };
 
+/**
+ * posts列表
+ */
 exports.postIndex = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
-  }
+  Post.findAll(null, null, 'title slug', function(err, posts) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
 
-  res.render('admin/post/index', data);
+    var data = {
+      title: adminConfig.pageTitle,
+      posts: posts
+    }
+
+    res.render('admin/post/index', data);    
+  });
 };
 
 exports.postEdit = function(req, res, next) {

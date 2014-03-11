@@ -10,22 +10,22 @@
   <div id="nav">
     <ul>
       <li><a href="/admin/home">Home</a><span> ›</span></li>
-      <li><a href="/admin/post">Post Index</a></li>
+      <li><a href="/admin/posts">Post Index</a></li>
     </ul>
     <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
   </div>
   <div id="post-list">
     <ul>
+      <% posts.forEach(function(post) { %>
       <li>
-        <a href='/admin/post/edit'>cccccc</a>
-
+        <a href='/admin/post/edit/<%= post.slug %>'><%= post.title %></a>
         <div class='action'>
               <span class='edit'>
-                <a href='/post/ffffff' target='_blank'>view</a>
-                <a href='/admin/post/delete' target='_blank'>x</a>
+                <a href='/post/<%= post.slug %>' target='_blank'>view</a>
               </span>
         </div>
       </li>
+      <% }); %>
     </ul>
   </div>
   <div id='clearfix'></div>

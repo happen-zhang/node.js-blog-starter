@@ -42,7 +42,7 @@ exports.handle = function(app) {
   app.get('/admin/page/edit', admin.authAdmin, admin.pageEdit);
   app.get('/admin/page/write', admin.authAdmin, admin.pageWrite);
   // post
-  app.get('/admin/post', admin.authAdmin, admin.postIndex);
+  app.get('/admin/posts', admin.authAdmin, admin.postIndex, exceptionHandler);
   app.get('/admin/post/edit', admin.authAdmin, admin.postEdit);
   app.get('/admin/post/write', admin.authAdmin, admin.postWrite);
   // install
