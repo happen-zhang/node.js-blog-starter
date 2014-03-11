@@ -27,6 +27,9 @@ exports.handle = function(app) {
   app.get('/admin/post/write', admin.postWrite);
   app.get('/admin/comment', admin.commentIndex);
   app.get('/admin/verifyAkismet', admin.verifyAkismet);
+
+  app.get('/admin/add/:token', admin.add, exceptionHandler);
+  app.post('/admin/create', admin.create, exceptionHandler);
 };
 
 exports.handleNotFound = function(req, res) {

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <% include common/title.html %>
+    <% include common/stylesheets.html %>
+  </head>
+  <body>
+    <div class="mod_login">
+      <header>
+        <h1 class="logo">Add a account</h1>
+      </header>
+      <div class="mod_login_main">
+        <form method="POST" action="/admin/create" id="login-form">
+          <div class="item">
+            <label for="login_name">Login Name:</label>
+            <input type="text" name="loginname" id="login_name">
+          </div>
+          <div class="item">
+            <label for="user_pass">Password:</label>
+            <input type="password" name="password" id="user_pass">
+          </div>
+          <input type="hidden" name="token" value="<%= token %>">
+          <div class="item">
+            <button type="submit" class="btn btn-small"><a>Add</a></button>
+          </div>
+        </form>
+        <div class="clearfix"></div>
+      </div>
+    </div>
+  </body>
+</html>
