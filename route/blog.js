@@ -85,19 +85,18 @@ exports.index = function(req, res, exceptionHandler) {
 
 // 文章页
 exports.post = function(req, res, exceptionHandler) {
-  Post.findBySlug(req.params.slug, null, function(err, posts) {
+  Post.findBySlug(req.params.slug, null, function(err, post) {
     if (err) {
       return exceptionHandler().handleError(err, req, res);
     }
 
-    if (0 === posts.length) {
+    if (null === post) {
       return exceptionHandler().handleNotFound(req, res);
     }
 
     // 生成token
     var token = util.generateToken();
     req.session.token = token;
-    var post = posts[0];
     var data = {
       title: blogConfig.blogname + ' | ' + post.title,
       blogname: blogConfig.blogname,

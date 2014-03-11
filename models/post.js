@@ -75,7 +75,7 @@ PostSchema.static('findAll', function(skip, limit, fields, callback) {
  * @return
  */
 PostSchema.static('findBySlug', function(slug, fields, callback) {
-  return this.find({ slug: slug }, fields, null, callback);
+  return this.findOne({ slug: slug }, fields, null, callback);
 });
 
 /**
