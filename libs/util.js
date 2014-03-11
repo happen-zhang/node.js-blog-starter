@@ -33,3 +33,15 @@ exports.generateToken = function() {
 
   return crypto.createHash('sha1').update(currentDate + random).digest('hex');
 };
+
+/**
+ * md5加密
+ * @param  string src
+ * @return string desc
+ */
+exports.md5 = function md5(src) {
+  var md5sum = crypto.createHash('md5');
+  md5sum.update(src);
+  src = md5sum.digest('hex');
+  return src;
+};

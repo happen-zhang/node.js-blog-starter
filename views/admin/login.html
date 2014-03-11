@@ -10,14 +10,14 @@
         <h1 class="logo"><%= title %></h1>
       </header>
       <div class="mod_login_main">
-        <form method="GET" action="/admin/home" id="login-form">
+        <form method="POST" action="/admin" id="login-form">
           <div class="item">
-            <label for="user_name">Username:</label>
-            <input type="text" name="name" id="user_name">
+            <label for="login_name">Login Name:</label>
+            <input type="text" name="loginname" id="login_name">
           </div>
           <div class="item">
             <label for="user_pass">Password:</label>
-            <input type="password" name="pass" id="user_pass">
+            <input type="password" name="password" id="user_pass">
           </div>
           <div class="item">
             <button type="submit" class="btn btn-small"><a>Login</a></button>
