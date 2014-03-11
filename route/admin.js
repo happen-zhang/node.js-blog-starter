@@ -76,7 +76,7 @@ exports.postWrite = function(req, res) {
 exports.postCreate = function(req, res, exceptionHandler) {
   var tags = req.body.tags.split(',');
   var created = new Date();
-  if (!req.body.created) {
+  if (req.body.created) {
     created = new Date(req.body.created);
   }
 
