@@ -10,7 +10,7 @@
           <time datetime="<%= post.created %>"><%= locals.moment(post.created).format("YYYY-MM-DD") %></time>
         </div>
         <% if ('' === post.briefContent) { %>
-        <div class="entry"><%- post.content %></div>
+        <div class="entry"><%- locals.marked(post.content) %></div>
         <% } else { %>
         <div class="entry">
           <!-- Brief -->
