@@ -11,42 +11,39 @@
   <div id="nav">
     <ul>
       <li><a href="/admin/home">Home</a><span> ›</span></li>
-      <li><a href="/admin/post">Post Index</a><span> ›</span></li>
-      <li><a href="/admin/post/edit/ssssss">AAAAAAAA</a><span> ›</span></li>
+      <li><a href="/admin/posts">Post Index</a><span> ›</span></li>
+      <li><a href="/admin/post/edit/<%= post.slug %>"><%= post.title %></a></li>
     </ul>
     <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
   </div>
-  <form id='write_post' method='post'>
+  <form id='write_post' action="/admin/post/update" method='post'>
     <div id='post_info'>
       <div class='item title'>
         <label for='post_title'><span>Title</span></label>
-        <input type='text' name='title' id='post_title' value='AAAAAAAAA' required="" placeholder="标题"/>
+        <input type='text' name='title' id='post_title' value='<%= post.title %>' required="" placeholder="标题"/>
       </div>
       <div class='item slug'>
         <label for='post_slug'><span>Slug</span></label>
-        <input type='text' name='slug' id='post_slug' value='SSSSSSS' required="" placeholder="别名"/>
+        <input type='text' name='slug' id='post_slug' value='<%= post.slug %>' required="" placeholder="slug"/>
       </div>
       <div class='item created'>
         <label for='post_created'><span>Created</span></label>
-        <input type='text' name='created' id='post_created' value='CCCCCCCCC' required=''/>
+        <input type='text' name='created' id='post_created' value='<%= locals.moment(post.created).format('MM/DD/YYYY') %>' required=''/>
       </div>
       <div class='item tags'>
         <label for='post_tags'><span>Tags</span></label>
-
-        <input type='text' name='tags' id='post_tags' value='sssss' required='' placeholder="标签">
-
-<!--         <input type='text' name='tags' id='post_tags' required='' placeholder="标签，在英文逗号分割"> -->
+        <input type='text' name='tags' id='post_tags' value='<%= tags %>' required='' placeholder="标签">
       </div>
       <div class="clearfix"></div>
     </div>
     <div id='content'>
       <div class="wmd-panel">
         <div id="wmd-button-bar"></div>
-        <textarea class="wmd-input post_content" name='content' id="wmd-input" required=''>eeeeeeeeeee</textarea>
+        <textarea class="wmd-input post_content" name='content' id="wmd-input" required=''><%= post.content %></textarea>
       </div>
     </div>
     <div id='meta'>
-      <input type='hidden' name='old_slug' id="post_old_slug" value='vvvvvvvvvv'>
+      <input type='hidden' name='id' id="post_old_slug" value='<%= post._id %>'>
       <button class='btn btn-small'><a id='post-it'>Edit Done</a></button>
     </div>
     <div class="clearfix"></div>

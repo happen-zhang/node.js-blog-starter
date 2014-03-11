@@ -100,13 +100,66 @@ exports.postCreate = function(req, res, exceptionHandler) {
   });
 }
 
-exports.postEdit = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
+/**
+ * edit post
+ */
+exports.postEdit = function(req, res, exceptionHandler) {
+  if (!req.params.slug) {
+    return exceptionHandler().handleNotFound(req, res);
   }
 
-  res.render('admin/post/edit', data);
+  Post.findBySlug(req.params.slug, null, function(err, post) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    // tags
+    var tags = '';
+    post.tags.forEach(function(tag) {
+      tags += tag.name + ',';
+    });
+    tags = tags.substr(0, tags.length - 1);
+
+    var data = {
+      title: adminConfig.pageTitle,
+      post: post,
+      tags: tags
+    }
+
+    res.render('admin/post/edit', data);
+  });
 };
+
+/**
+ * update post
+ */
+exports.postUpdate = function(req, res, exceptionHandler) {
+  if (!req.body.id) {
+    return exceptionHandler().handleNotFound(req, res);
+  }
+
+  // tags
+  var tags = req.body.tags.split(',');
+  tags.forEach(function(tag, i) {
+    tags[i] = { name: tag };
+  });
+
+  var post = { title: req.body.title,
+               slug: req.body.slug,
+               tags: tags,
+               content: req.body.content };
+  if (req.body.created) {
+    post.created = req.body.created;
+  }
+  
+  Post.updateById(req.body.id, post, function(err) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    res.redirect('/admin/posts');
+  });
+}
 
 exports.commentIndex = function(req, res, next) {
   var data = {

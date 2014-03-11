@@ -90,6 +90,17 @@ PostSchema.static('findByTag', function(tag, fields, callback) {
 });
 
 /**
+ * 按id更新post
+ * @param  int   id
+ * @param  Object   post
+ * @param  Function callback
+ * @return
+ */
+PostSchema.static('updateById', function(id, post, callback) {
+  return this.findByIdAndUpdate(id, { $set: post }, callback);
+});
+
+/**
  * 添加评论到指定id的post
  * @param  int   id
  * @param  Comment   comment
