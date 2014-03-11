@@ -59,20 +59,53 @@ exports.postIndex = function(req, res, next) {
   });
 };
 
+/**
+ * write post
+ */
+exports.postWrite = function(req, res) {
+  var data = {
+    title: adminConfig.pageTitle
+  }
+
+  res.render('admin/post/write', data);
+};
+
+/**
+ * add post
+ */
+exports.postCreate = function(req, res, exceptionHandler) {
+  var tags = req.body.tags.split(',');
+  var created = new Date();
+  if (!req.body.created) {
+    created = new Date(req.body.created);
+  }
+
+  // tags
+  tags.forEach(function(tag, i) {
+    tags[i] = { name: tag };
+  });
+
+  var post = new Post({ title: req.body.title,
+                        slug: req.body.slug,
+                        tags: tags,
+                        content: req.body.content,
+                        created: created });
+
+  post.save(function(err) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    res.redirect('/admin/posts');
+  });
+}
+
 exports.postEdit = function(req, res, next) {
   var data = {
     title: adminConfig.pageTitle
   }
 
   res.render('admin/post/edit', data);
-};
-
-exports.postWrite = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
-  }
-
-  res.render('admin/post/write', data);
 };
 
 exports.commentIndex = function(req, res, next) {

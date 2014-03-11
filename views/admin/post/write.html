@@ -15,7 +15,7 @@
     </ul>
     <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
   </div>
-  <form id='write_post' method='post'>
+  <form id='write_post' action="/admin/post/create" method='post'>
     <div id='post_info'>
       <div class='item title'>
         <label for='post_title'><span>Title</span></label>
@@ -31,7 +31,7 @@
       </div>
       <div class='item tags'>
         <label for='post_tags'><span>Tags</span></label>
-        <input type='text' name='tags' id='post_tags' required='' placeholder="标签，在英文逗号分割">
+        <input type='text' name='tags' id='post_tags' required='' placeholder="标签，用英文逗号分割">
       </div>
       <div class='clearfix'></div>
     </div>

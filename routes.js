@@ -43,8 +43,10 @@ exports.handle = function(app) {
   app.get('/admin/page/write', admin.authAdmin, admin.pageWrite);
   // post
   app.get('/admin/posts', admin.authAdmin, admin.postIndex, exceptionHandler);
-  app.get('/admin/post/edit', admin.authAdmin, admin.postEdit);
   app.get('/admin/post/write', admin.authAdmin, admin.postWrite);
+  app.post('/admin/post/create',admin.authAdmin, admin.postCreate,
+                                                 exceptionHandler);
+  app.get('/admin/post/edit', admin.authAdmin, admin.postEdit);
   // install
   app.get('/admin/install', admin.install);
   // comment
