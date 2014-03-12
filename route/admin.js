@@ -17,6 +17,9 @@ var akismet = require('akismet').client({
   apiKey: akismetConfig.apiKey
 });
 
+/**
+ * home
+ */
 exports.home = function(req, res, next) {
   var data = {
     title: adminConfig.pageTitle
@@ -244,7 +247,7 @@ exports.postUpdate = function(req, res, exceptionHandler) {
 }
 
 /**
- * 评论列表
+ * comments列表
  */
 exports.commentIndex = function(req, res, exceptionHandler) {
   Post.findAll(null, '_id title slug comments', function(err, posts) {
@@ -268,7 +271,7 @@ exports.commentIndex = function(req, res, exceptionHandler) {
 };
 
 /**
- * 删除评论
+ * comment delete
  */
 exports.commentDelete = function(req, res, exceptionHandler) {
   if (!req.params.postId || !req.params.id) {
@@ -340,7 +343,7 @@ exports.verifyAkismet  = function(req, res, exceptionHandler) {
 };
 
 /**
- * 登陆页
+ * login
  */
 exports.login = function(req, res, next) {
   // 已登录则重定向到home
@@ -356,7 +359,7 @@ exports.login = function(req, res, next) {
 };
 
 /**
- * 处理登录
+ * do login
  */
 exports.doLogin = function(req, res, exceptionHandler) {
   var loginname = req.body.loginname.trim();
@@ -410,7 +413,7 @@ exports.doLogin = function(req, res, exceptionHandler) {
 };
 
 /**
- * 登出
+ * logout
  */
 exports.logout = function(req, res) {
   req.session.destroy();
@@ -419,7 +422,7 @@ exports.logout = function(req, res) {
 };
 
 /**
- * 过滤验证登录
+ * auth admin
  */
 exports.authAdmin = function(req, res, next) {
   if (hasLogin(req)) {
@@ -429,6 +432,9 @@ exports.authAdmin = function(req, res, next) {
   res.redirect('/admin');
 };
 
+/**
+ * add admin
+ */
 exports.add = function(req, res, exceptionHandler) {
   if ('' === adminConfig.token
       || !req.params.token
@@ -444,6 +450,9 @@ exports.add = function(req, res, exceptionHandler) {
   res.render('admin/add', data);
 }
 
+/**
+ * save admin to datebase
+ */
 exports.create = function(req, res, exceptionHandler) {
   var token = req.body.token;
 

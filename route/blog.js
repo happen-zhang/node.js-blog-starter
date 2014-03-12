@@ -22,7 +22,9 @@ var akismet = require('akismet').client({
   apiKey: akismetConfig.apiKey
 });
 
-// 首页
+/**
+ * homepage
+ */
 exports.index = function(req, res, exceptionHandler) {
   Post.count(null, function(err, count) {
     if (err) {
@@ -84,7 +86,9 @@ exports.index = function(req, res, exceptionHandler) {
   });
 };
 
-// 文章页
+/**
+ * post
+ */
 exports.post = function(req, res, exceptionHandler) {
   Post.findBySlug(req.params.slug, null, function(err, post) {
     if (err) {
@@ -109,7 +113,9 @@ exports.post = function(req, res, exceptionHandler) {
   });
 };
 
-// 评论
+/**
+ * submit a comment
+ */
 exports.comment = function(req, res, exceptionHandler) {
   var id = req.body.id;
   var slug = req.body.slug;
@@ -179,7 +185,9 @@ exports.comment = function(req, res, exceptionHandler) {
   });
 };
 
-// 标签页
+/**
+ * tag
+ */
 exports.tag = function(req, res, exceptionHandler) {
   Post.findByTag(req.params.tag, 'title slug created', function(err, posts) {
     if (err) {
@@ -197,7 +205,9 @@ exports.tag = function(req, res, exceptionHandler) {
   });
 };
 
-// 存档页
+/**
+ * archives
+ */
 exports.archives = function(req, res, exceptionHandler) {
   Post.findAll(null, null, null, function(err, posts) {
     if (err) {
@@ -234,7 +244,9 @@ exports.archives = function(req, res, exceptionHandler) {
   });
 };
 
-// 友情链接
+/**
+ * links
+ */
 exports.links = function(req, res, exceptionHandler) {
   renderPage('links', req, res, exceptionHandler);
 
@@ -253,12 +265,16 @@ exports.links = function(req, res, exceptionHandler) {
   // });
 };
 
-// 关于我
+/**
+ * about
+ */
 exports.about = function(req, res, exceptionHandler) {
   renderPage('about', req, res, exceptionHandler);
 };
 
-// 订阅
+/**
+ * feed
+ */
 exports.feed = function(req, res, exceptionHandler) {
   if ('undefined' === typeof rssConfig) {
     return exceptionHandler().handleNotFound(req, res);
@@ -308,6 +324,11 @@ exports.feed = function(req, res, exceptionHandler) {
 
 /**
  * 渲染page数据的页面
+ * @param  string slug
+ * @param  Require req
+ * @param  Response res
+ * @param  Function exceptionHandler
+ * @return
  */
 var renderPage = function(slug, req, res, exceptionHandler) {
   Page.findBySlug(slug, null, function(err, page) {
