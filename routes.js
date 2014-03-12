@@ -50,10 +50,14 @@ exports.handle = function(app) {
                                                      exceptionHandler);
   app.post('/admin/post/update', admin.authAdmin, admin.postUpdate,
                                                   exceptionHandler);
+  // comment
+  app.get('/admin/comments', admin.authAdmin, admin.commentIndex,
+                                              exceptionHandler);
+  app.get('/admin/comment/delete/:postId/:id', admin.authAdmin,
+                                                admin.commentDelete,
+                                                exceptionHandler);
   // install
   app.get('/admin/install', admin.install);
-  // comment
-  app.get('/admin/comment', admin.authAdmin, admin.commentIndex);
   // verify akismet
   app.get('/admin/verifyAkismet', admin.authAdmin, admin.verifyAkismet);
   // admin

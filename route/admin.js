@@ -161,12 +161,46 @@ exports.postUpdate = function(req, res, exceptionHandler) {
   });
 }
 
-exports.commentIndex = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
+/**
+ * 评论列表
+ */
+exports.commentIndex = function(req, res, exceptionHandler) {
+  Post.findAll(null, '_id title slug comments', function(err, posts) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    // isSpam 0 1
+    if (req.query['isSpam']) {
+      var isSpam = req.query['isSpam'];
+    }
+
+    var data = {
+      title: adminConfig.pageTitle,
+      posts: posts,
+      isSpam: isSpam
+    }
+
+    res.render('admin/comment/index', data);
+  });
+};
+
+/**
+ * 删除评论
+ */
+exports.commentDelete = function(req, res, exceptionHandler) {
+  if (!req.params.postId || !req.params.id) {
+    return exceptionHandler().handleNotFound(req, res);
   }
 
-  res.render('admin/comment/index', data);
+  Post.deleteCommentById(req.params.postId, req.params.id, function(err) {
+    if (err) {
+      console.log(err);
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    res.redirect('/admin/comments');
+  });
 };
 
 exports.verifyAkismet  = function(req, res, next) {

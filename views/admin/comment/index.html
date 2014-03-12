@@ -10,27 +10,59 @@
       <div id="nav">
         <ul>
           <li><a href="/admin/home">Home</a><span> ›</span></li>
-          <li><a href="/admin/comment">Comment Index</a>
+          <li><a href="/admin/comments">Comment Index</a>
         </ul>
         <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
       </div>
       <div id="comment-status">
-        <a href="?status=1" data-status='1'>Normal</a>
-        <a href="?status=0" data-status='0'>垃圾评论</a>
+        <a href="?isSpam=0" data-status='1'>Normal</a>
+        <a href="?isSpam=1" data-status='0'>Spam</a>
       </div>
       <div id='comment-list'>
       	<ul>
-      		<li>
-            <input type="checkbox" data-id="sss" />
-      			<a href='/post?id=ccccc'>Hasssdq</a>
-      			<span>&nbsp;post comment on&nbsp;</span>
-            <a href='/post/ddddd'>ssssss</a>
-            <time>ccccccc</time>
-            <span>Status:eeeeeee</span>
-            <a class='action delete' href='/admin/comment/delete/qqqqqq'>Delete</a>
-            <a class='action spam' href='/admin/submitSpam/vvvvvvvv'>SPAM</a>
-            <div class='content'>vvvvvvvv</div>
-      	</ul>
+          <% posts.forEach(function(post) { %>
+          <%   if (post.comments && 0 !== post.comments) { %>
+          <%     post.comments.forEach(function(comment) { %>
+          <%       if ('undefined' === typeof isSpam) { %>
+          <li>
+            <input type="checkbox" data-id="<%= comment._id %>" />
+            <%   if (comment.website) { %>
+            <a href='<%= comment.website %>'><%= comment.author %></a>
+            <%   } else { %>
+            <%= comment.author %>     
+            <%   } %>
+            <span>&nbsp;post comment on&nbsp;</span>
+            <a href='/post/<%= post.slug %>'><%= post.title %></a>
+            <time><%= locals.moment(comment.created).format('YYYY-MM-DD HH:mm:ss') %></time>
+            <% if (comment.isSpam) { %>
+            <span>IsSpam: Yes</span>
+            <% } else { %>
+            <span>IsSpam: No</span>
+            <% } %>
+            <a class='action delete' href='/admin/comment/delete/<%= post._id %>/<%= comment._id %>'>Delete</a>
+            <a class='action spam' href='/admin/spam/<%= post._id %>/<%= comment._id %>'>SPAM</a>
+            <div class='content'><%- locals.marked(comment.content) %></div>
+          </li>
+          <%       } else if (isSpam == comment.isSpam) { %>
+          <li>
+            <input type="checkbox" data-id="<%= comment._id %>" />
+            <%   if (comment.website) { %>
+            <a href='<%= comment.website %>'><%= comment.author %></a>
+            <%   } else { %>
+            <%= comment.author %>     
+            <%   } %>
+            <span>&nbsp;post comment on&nbsp;</span>
+            <a href='/post/<%= post.slug %>'><%= post.title %></a>
+            <time><%= locals.moment(comment.created).format('YYYY-MM-DD HH:mm:ss') %></time>
+            <a class='action delete' href='/admin/comment/delete/<%= post._id %>/<%= comment._id %>'>Delete</a>
+            <a class='action spam' href='/admin/spam/<%= post._id %>/<%= comment._id %>'>SPAM</a>
+            <div class='content'><%- locals.marked(comment.content) %></div>
+          </li>
+          <%       } %>         
+          <%     }); %>
+          <%   } %>
+          <% }); %>
+        </ul>
       </div>
       <div id='clearfix'></div>
     </div>

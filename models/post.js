@@ -111,4 +111,15 @@ PostSchema.static('addCommentById', function(id, comment, callback) {
   return this.update({ _id: id }, { $push: { comments: comment } }, callback);
 });
 
+/**
+ * 删除指定id post中的指定commentId的评论
+ * @param  int   id
+ * @param  int   commentId
+ * @param  Function callback
+ * @return
+ */
+PostSchema.static('deleteCommentById', function(id, commentId, cb) {
+  return this.findByIdAndUpdate(id, { comments: { _id: commentId } }, cb);
+});
+
 module.exports = mongoose.model('Post', PostSchema);
