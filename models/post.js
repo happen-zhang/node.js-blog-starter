@@ -118,8 +118,9 @@ PostSchema.static('addCommentById', function(id, comment, callback) {
  * @param  Function callback
  * @return
  */
-PostSchema.static('deleteCommentById', function(id, commentId, cb) {
-  return this.findByIdAndUpdate(id, { comments: { _id: commentId } }, cb);
+PostSchema.static('deleteCommentById', function(id, commentId, callback) {
+  var pull = { comments: { _id: commentId } };
+  return this.findByIdAndUpdate(id, { $pull: pull }, callback);
 });
 
 module.exports = mongoose.model('Post', PostSchema);
