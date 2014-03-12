@@ -9,8 +9,7 @@ var MongoStore = require('connect-mongo')(express);
 var blogConfig = require('./config').blogConfig;
 var dbConfig = require('./config').dbConfig;
 var route = require('./routes');
-
-var util = require('./libs/util');
+var db = require('./models/db');
 
 var app = express();
 // 静态文件目录
@@ -51,7 +50,7 @@ app.use(express.session({
   // 1 Hour
   cookie: { maxAge: blogConfig.cookieMaxAge },
   store: new MongoStore({
-    url: util.generateMongoUrl(dbConfig)
+    url: dbConfig.development.dbUrl
   })
 }));
 
