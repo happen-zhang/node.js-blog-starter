@@ -5,6 +5,7 @@
 var adminConfig = require('../config').adminConfig;
 
 var Admin = require('../models/admin');
+var Page = require('../models/page');
 var Post = require('../models/post');
 
 var util = require('../libs/util');
@@ -17,28 +18,102 @@ exports.home = function(req, res, next) {
   res.render('admin/home', data);
 };
 
-exports.pageIndex = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
-  }
+/**
+ * page列表页
+ */
+exports.pageIndex = function(req, res, exceptionHandler) {
+  Page.find(null, null, null, function(err, pages) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
 
-  res.render('admin/page/index', data);
+    var data = {
+      title: adminConfig.pageTitle,
+      pages: pages
+    }
+
+    res.render('admin/page/index', data);
+  });
 };
 
-exports.pageEdit = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
-  }
-
-  res.render('admin/page/edit', data);
-};
-
+/**
+ * write page
+ */
 exports.pageWrite = function(req, res, next) {
   var data = {
     title: adminConfig.pageTitle
   }
 
   res.render('admin/page/write', data);
+};
+
+/**
+ * add page
+ */
+exports.pageCreate = function(req, res, exceptionHandler) {
+  var created = new Date();
+  if (req.body.created) {
+    created = new Date(req.body.created);
+  }
+
+  var page = new Page({ title: req.body.title,
+                        slug: req.body.slug,
+                        content: req.body.content,
+                        created: created });
+
+  page.save(function(err) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    res.redirect('/admin/pages');
+  });
+};
+
+/**
+ * edit page
+ */
+exports.pageEdit = function(req, res, exceptionHandler) {
+  if (!req.params.slug) {
+    return exceptionHandler().handleNotFound(req, res);
+  }
+
+  Page.findBySlug(req.params.slug, null, function(err, page) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    var data = {
+      title: adminConfig.pageTitle,
+      page: page
+    }
+
+    res.render('admin/page/edit', data);
+  });
+};
+
+/**
+ * page update
+ */
+exports.pageUpdate = function(req, res, exceptionHandler) {
+  if (!req.body.id) {
+    return exceptionHandler().handleNotFound(req, res);
+  }
+
+  var page = { title: req.body.title,
+               slug: req.body.slug,
+               content: req.body.content };
+  if (req.body.created) {
+    page.created = req.body.created;
+  }
+  
+  Page.updateById(req.body.id, page, function(err) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    res.redirect('/admin/pages');
+  });
 };
 
 /**

@@ -38,9 +38,14 @@ exports.handle = function(app) {
   // home
   app.get('/admin/home', admin.authAdmin, admin.home);
   // page
-  app.get('/admin/page', admin.authAdmin, admin.pageIndex);
-  app.get('/admin/page/edit', admin.authAdmin, admin.pageEdit);
+  app.get('/admin/pages', admin.authAdmin, admin.pageIndex);
   app.get('/admin/page/write', admin.authAdmin, admin.pageWrite);
+  app.post('/admin/page/create', admin.authAdmin, admin.pageCreate,
+                                                  exceptionHandler);
+  app.get('/admin/page/edit/:slug', admin.authAdmin, admin.pageEdit,
+                                               exceptionHandler);
+  app.post('/admin/page/update', admin.authAdmin, admin.pageUpdate,
+                                               exceptionHandler);
   // post
   app.get('/admin/posts', admin.authAdmin, admin.postIndex, exceptionHandler);
   app.get('/admin/post/write', admin.authAdmin, admin.postWrite);

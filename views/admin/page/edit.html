@@ -11,35 +11,35 @@
   <div id="nav">
     <ul>
       <li><a href="/admin/home">Home</a><span> ›</span></li>
-      <li><a href="/admin/page">Page Index</a><span> ›</span></li>
-      <li><a href="/admin/page/edit">AAAAAAAA</a><span> ›</span></li>
+      <li><a href="/admin/pages">Page Index</a><span> ›</span></li>
+      <li><a href="/admin/page/edit/<%= page.slug %>"><%= page.title %></a></li>
     </ul>
-    <div class="quick"><a href="/admin/post/write" title="Write Post"><span>Write</span></a></div>
+    <div class="quick"><a href="/admin/page/write" title="Write Post"><span>Write</span></a></div>
   </div>
-  <form id='write_post' method='post'>
+  <form id='write_post' action='/admin/page/update' method='post'>
     <div id='post_info'>
       <div class='item title'>
         <label for='page_title'><span>Title</span></label>
-        <input type='text' name='title' id='page_title' value='AAAAAAA'/>
+        <input type='text' name='title' id='page_title' value='<%= page.title %>'/>
       </div>
       <div class='item slug'>
         <label for='page_slug'><span>Slug</span></label>
-        <input type='text' name='slug' id='page_slug' value='qqqqqqq' required="">
+        <input type='text' name='slug' id='page_slug' value='<%= page.slug %>' required="">
       </div>
       <div class='item created'>
         <label for='page_created'><span>Created</span></label>
-        <input type='text' name='created' id='page_created' value='ddddddd' required=''>
+        <input type='text' name='created' id='page_created' value='<%= locals.moment(page.created).format('MM/DD/YYYY') %>' required=''>
       </div>
       <div class='clearfix'></div>
     </div>
     <div id='content'>
       <div class="wmd-panel">
         <div id="wmd-button-bar"></div>
-        <textarea class="wmd-input post_content" name='content' id="wmd-input" required=''>zzzzzzzzzz</textarea>
+        <textarea class="wmd-input post_content" name='content' id="wmd-input" required=''><%= page.content %></textarea>
       </div>
     </div>
     <div id='meta'>
-      <input type='hidden' name='old_slug' id="page_old_slug" value='dddddddddddddd'>
+      <input type='hidden' name='id' id="post_old_slug" value='<%= page._id %>'>
       <button class='btn btn-small'><a id='post-it'>Edit Done</a></button>
     </div>
     <div class="clearfix"></div>
