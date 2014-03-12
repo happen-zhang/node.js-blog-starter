@@ -11,66 +11,159 @@ exports.handle = function(app) {
    */
 
   // homepage
-  app.get('/', blog.index, exceptionHandler);
-  app.get(/^\/p\/(\d+)$/, blog.index, exceptionHandler);
+  app.get('/',
+          blog.index,
+          exceptionHandler);
+  app.get(/^\/p\/(\d+)$/,
+          blog.index,
+          exceptionHandler);
+
   // post
-  app.get('/post/:slug', blog.post, exceptionHandler);
-  app.post('/comment', blog.comment, exceptionHandler);
+  app.get('/post/:slug',
+          blog.post,
+          exceptionHandler);
+  app.post('/comment',
+           blog.comment,
+           exceptionHandler);
+
   // tag
-  app.get('/tag/:tag', blog.tag, exceptionHandler);
+  app.get('/tag/:tag',
+          blog.tag,
+          exceptionHandler);
+
   // archives
-  app.get('/archives', blog.archives, exceptionHandler);
+  app.get('/archives',
+          blog.archives,
+          exceptionHandler);
+
   // links
-  app.get('/links', blog.links, exceptionHandler);
+  app.get('/links',
+          blog.links,
+          exceptionHandler);
+
   // about
-  app.get('/about', blog.about, exceptionHandler);
+  app.get('/about',
+          blog.about,
+          exceptionHandler);
+
   // feed
-  app.get('/feed', blog.feed, exceptionHandler);
+  app.get('/feed',
+          blog.feed,
+          exceptionHandler);
 
   /**
    * admin
    */
 
-  // login 和 logout
+  // login
   app.get('/admin', admin.login);
-  app.post('/admin', admin.doLogin, exceptionHandler);
-  app.get('/admin/logout', admin.authAdmin, admin.logout);
+  app.post('/admin',
+           admin.doLogin,
+           exceptionHandler);
+
+  // logout
+  app.get('/admin/logout',
+          admin.authAdmin,
+          admin.logout);
+
   // home
-  app.get('/admin/home', admin.authAdmin, admin.home);
-  // page
-  app.get('/admin/pages', admin.authAdmin, admin.pageIndex);
-  app.get('/admin/page/write', admin.authAdmin, admin.pageWrite);
-  app.post('/admin/page/create', admin.authAdmin, admin.pageCreate,
-                                                  exceptionHandler);
-  app.get('/admin/page/edit/:slug', admin.authAdmin, admin.pageEdit,
-                                               exceptionHandler);
-  app.post('/admin/page/update', admin.authAdmin, admin.pageUpdate,
-                                               exceptionHandler);
-  // post
-  app.get('/admin/posts', admin.authAdmin, admin.postIndex, exceptionHandler);
-  app.get('/admin/post/write', admin.authAdmin, admin.postWrite);
-  app.post('/admin/post/create',admin.authAdmin,admin.postCreate,
-                                                 exceptionHandler);
-  app.get('/admin/post/edit/:slug', admin.authAdmin, admin.postEdit,
-                                                     exceptionHandler);
-  app.post('/admin/post/update', admin.authAdmin, admin.postUpdate,
-                                                  exceptionHandler);
-  // comment
-  app.get('/admin/comments', admin.authAdmin, admin.commentIndex,
-                                              exceptionHandler);
-  app.get('/admin/comment/delete/:postId/:id', admin.authAdmin,
-                                                admin.commentDelete,
-                                                exceptionHandler);
-  app.get('/admin/comment/spam/:id', admin.authAdmin,
-                                     admin.commentSpam,
-                                     exceptionHandler);
+  app.get('/admin/home',
+          admin.authAdmin,
+          admin.home);
+
+  // pages
+  app.get('/admin/pages',
+          admin.authAdmin,
+          admin.pageIndex);
+
+  // page write
+  app.get('/admin/page/write',
+          admin.authAdmin,
+          admin.pageWrite);
+
+  // page create
+  app.post('/admin/page/create',
+           admin.authAdmin,
+           admin.pageCreate,
+           exceptionHandler);
+
+  // page edit
+  app.get('/admin/page/edit/:slug',
+          admin.authAdmin,
+          admin.pageEdit,
+          exceptionHandler);
+
+  // page update
+  app.post('/admin/page/update',
+           admin.authAdmin,
+           admin.pageUpdate,
+           exceptionHandler);
+
+  // posts
+  app.get('/admin/posts',
+          admin.authAdmin,
+          admin.postIndex,
+          exceptionHandler);
+
+  // post add
+  app.get('/admin/post/write',
+          admin.authAdmin,
+          admin.postWrite);
+
+  // post create
+  app.post('/admin/post/create',
+           admin.authAdmin,
+           admin.postCreate,
+           exceptionHandler);
+
+  // post edit
+  app.get('/admin/post/edit/:slug',
+          admin.authAdmin,
+          admin.postEdit,
+          exceptionHandler);
+
+  // post update
+  app.post('/admin/post/update',
+           admin.authAdmin,
+           admin.postUpdate,
+           exceptionHandler);
+
+  // comments
+  app.get('/admin/comments',
+          admin.authAdmin,
+          admin.commentIndex,
+          exceptionHandler);
+
+  // comment delete
+  app.get('/admin/comment/delete/:postId/:id',
+          admin.authAdmin,
+          admin.commentDelete,
+          exceptionHandler);
+
+  // comment spam
+  app.get('/admin/comment/spam/:id',
+          admin.authAdmin,
+          admin.commentSpam,
+          exceptionHandler);
+
   // install
   app.get('/admin/install', admin.install);
+
   // verify akismet
-  app.get('/admin/verifyAkismet', admin.authAdmin, admin.verifyAkismet);
-  // admin
-  app.get('/admin/add/:token', admin.add, exceptionHandler);
-  app.post('/admin/create', admin.create, exceptionHandler);
+  app.get('/admin/verifyAkismet',
+          admin.authAdmin,
+          admin.verifyAkismet,
+          exceptionHandler);
+
+  // admin add
+  app.get('/admin/add/:token',
+          admin.add,
+          exceptionHandler);
+
+  // admin create
+  app.post('/admin/create',
+           admin.create,
+           exceptionHandler);
 };
 
 exports.handleNotFound = function(req, res) {
