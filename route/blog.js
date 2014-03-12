@@ -12,7 +12,7 @@ var akismetConfig = require('../config').akismetConfig;
 var Post = require('../models/post');
 var Comment = require('../models/comment');
 var Page = require('../models/page');
-var Link = require('../models/link');
+// var Link = require('../models/link');
 
 var util = require('../libs/util');
 
@@ -236,19 +236,21 @@ exports.archives = function(req, res, exceptionHandler) {
 
 // 友情链接
 exports.links = function(req, res, exceptionHandler) {
-  Link.findAll('name url description', function(err, links) {
-    if (err) {
-      return exceptionHandler().handleError(err, req, res);
-    }
+  renderPage('links', req, res, exceptionHandler);
 
-    var data = {
-      title: blogConfig.blogname + ' | ' + '友情链接',
-      blogname: blogConfig.blogname,
-      links: links
-    }
+  // Link.findAll('name url description', function(err, links) {
+  //   if (err) {
+  //     return exceptionHandler().handleError(err, req, res);
+  //   }
 
-    res.render('blog/links', data);
-  });
+  //   var data = {
+  //     title: blogConfig.blogname + ' | ' + '友情链接',
+  //     blogname: blogConfig.blogname,
+  //     links: links
+  //   }
+
+  //   res.render('blog/links', data);
+  // });
 };
 
 // 关于我
@@ -318,7 +320,7 @@ var renderPage = function(slug, req, res, exceptionHandler) {
     }
 
     var data = {
-      title: page.title,
+      title: blogConfig.blogname + ' | ' + page.title,
       blogname: blogConfig.blogname,
       page: page
     }
