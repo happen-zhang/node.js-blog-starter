@@ -62,7 +62,7 @@ exports.index = function(req, res, exceptionHandler) {
       // 上一页 下一页
       var previousPage = 0;
       var nextPage = 0;
-      if (1 === currentPage) {
+      if (1 === currentPage && count > listRows) {
         nextPage = currentPage + 1;
       } else if (maxPage === currentPage) {
         previousPage = currentPage - 1;
