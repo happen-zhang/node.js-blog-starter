@@ -123,4 +123,17 @@ PostSchema.static('deleteCommentById', function(id, commentId, callback) {
   return this.findByIdAndUpdate(id, { $pull: pull }, callback);
 });
 
+/**
+ * spam/unspam
+ * @param  string   commentId
+ * @param  Boolean  isSpam
+ * @param  Function cb
+ * @return
+ */
+PostSchema.static('spamCommentById', function(commentId, isSpam, cb) {
+  var set = { 'comments.$.isSpam': isSpam };
+
+  return this.update({ 'comments._id': commentId }, { $set: set }, cb);
+});
+
 module.exports = mongoose.model('Post', PostSchema);

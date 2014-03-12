@@ -203,6 +203,29 @@ exports.commentDelete = function(req, res, exceptionHandler) {
   });
 };
 
+/**
+ * 标记spam
+ */
+exports.commentSpam = function(req, res, exceptionHandler) {
+  if (!req.params.id) {
+    return exceptionHandler().handleNotFound(req, res);
+  }
+
+  var spam = true;
+  if ('true' === req.query['spamStatus']) {
+    console.log('sssss');
+    spam = false;
+  }
+
+  Post.spamCommentById(req.params.id, spam, function(err) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    res.redirect('/admin/comments');
+  });
+};
+
 exports.verifyAkismet  = function(req, res, next) {
   var data = {
     title: adminConfig.pageTitle

@@ -40,7 +40,11 @@
             <span>IsSpam: No</span>
             <% } %>
             <a class='action delete' href='/admin/comment/delete/<%= post._id %>/<%= comment._id %>'>Delete</a>
-            <a class='action spam' href='/admin/spam/<%= post._id %>/<%= comment._id %>'>SPAM</a>
+            <% if (comment.isSpam) { %>
+            <a class='action spam' href='/admin/comment/spam/<%= comment._id %>?spamStatus=<%= comment.isSpam %>'>UNSPAM</a>
+            <% } else { %>
+             <a class='action spam' href='/admin/comment/spam/<%= comment._id %>?spamStatus=<%= comment.isSpam %>'>SPAM</a>
+            <% } %>
             <div class='content'><%- locals.marked(comment.content) %></div>
           </li>
           <%       } else if (isSpam == comment.isSpam) { %>
@@ -55,7 +59,11 @@
             <a href='/post/<%= post.slug %>'><%= post.title %></a>
             <time><%= locals.moment(comment.created).format('YYYY-MM-DD HH:mm:ss') %></time>
             <a class='action delete' href='/admin/comment/delete/<%= post._id %>/<%= comment._id %>'>Delete</a>
-            <a class='action spam' href='/admin/spam/<%= post._id %>/<%= comment._id %>'>SPAM</a>
+            <% if (comment.isSpam) { %>
+            <a class='action spam' href='/admin/comment/spam/<%= comment._id %>?spamStatus=<%= comment.isSpam %>'>UNSPAM</a>
+            <% } else { %>
+             <a class='action spam' href='/admin/comment/spam/<%= comment._id %>?spamStatus=<%= comment.isSpam %>'>SPAM</a>
+            <% } %>
             <div class='content'><%- locals.marked(comment.content) %></div>
           </li>
           <%       } %>         

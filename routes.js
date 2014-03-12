@@ -56,6 +56,9 @@ exports.handle = function(app) {
   app.get('/admin/comment/delete/:postId/:id', admin.authAdmin,
                                                 admin.commentDelete,
                                                 exceptionHandler);
+  app.get('/admin/comment/spam/:id', admin.authAdmin,
+                                     admin.commentSpam,
+                                     exceptionHandler);
   // install
   app.get('/admin/install', admin.install);
   // verify akismet
