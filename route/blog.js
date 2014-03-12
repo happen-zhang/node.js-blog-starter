@@ -11,6 +11,7 @@ var akismetConfig = require('../config').akismetConfig;
 
 var Post = require('../models/post');
 var Comment = require('../models/comment');
+var Page = require('../models/page');
 var Link = require('../models/link');
 
 var util = require('../libs/util');
@@ -251,13 +252,8 @@ exports.links = function(req, res, exceptionHandler) {
 };
 
 // 关于我
-exports.about = function(req, res, next) {
-  var data = {
-    title: blogConfig.blogname,
-    blogname: blogConfig.blogname
-  }
-
-  res.render('blog/about', data);
+exports.about = function(req, res, exceptionHandler) {
+  renderPage('about', req, res, exceptionHandler);
 };
 
 // 订阅
@@ -305,5 +301,28 @@ exports.feed = function(req, res, exceptionHandler) {
     // xml
     res.contentType('application/xml');
     res.send(rssContent);
+  });
+}
+
+/**
+ * 渲染page数据的页面
+ */
+var renderPage = function(slug, req, res, exceptionHandler) {
+  Page.findBySlug(slug, null, function(err, page) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    if (null === page) {
+      return exceptionHandler().handleNotFound(req, res);
+    }
+
+    var data = {
+      title: page.title,
+      blogname: blogConfig.blogname,
+      page: page
+    }
+
+    res.render('blog/page', data);
   });
 }
