@@ -3,12 +3,19 @@
  */
 
 var adminConfig = require('../config').adminConfig;
+var akismetConfig = require('../config').akismetConfig;
 
 var Admin = require('../models/admin');
 var Page = require('../models/page');
 var Post = require('../models/post');
 
 var util = require('../libs/util');
+
+// akismet
+var akismet = require('akismet').client({
+  blog: akismetConfig.blog,
+  apiKey: akismetConfig.apiKey
+});
 
 exports.home = function(req, res, next) {
   var data = {
@@ -301,20 +308,35 @@ exports.commentSpam = function(req, res, exceptionHandler) {
   });
 };
 
-exports.verifyAkismet  = function(req, res, next) {
-  var data = {
-    title: adminConfig.pageTitle
-  }
-
-  res.render('admin/verifyAkismet', data);
-};
-
 exports.install = function(req, res, next) {
   var data = {
     title: adminConfig.pageTitle
   }
 
   res.render('admin/install', data);
+};
+
+/**
+ * 验证akismet key
+ */
+exports.verifyAkismet  = function(req, res, exceptionHandler) {
+  akismet.verifyKey(function(err, isValidate) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    var status = false;
+    if (isValidate) {
+      status = true;
+    }
+
+    var data = {
+      title: adminConfig.pageTitle,
+      status: status
+    }
+
+    res.render('admin/verify_akismet', data);
+  });
 };
 
 /**
