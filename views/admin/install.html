@@ -18,23 +18,23 @@
   </head>
   <body>
     <div class="main">
-      <h2>Noderce 初始化</h2>
+      <h2><%= title %> 初始化</h2>
       <% if(typeof msg != 'undefined'){ %>
       <p> 初始化成功，请
         <a href='/admin'>登录</a>
       </p>
-    <% }else if(typeof installed == 'undefined'){ %>
+    <% } else if (typeof installed === 'undefined'){ %>
       <div id='dec'>
-        <p>初始化数据，将创建一个用户，并生成一篇文章及评论。</p>
-        <p>请设置一个用户名密码</p>
+        <p>初始化数据，将创建一个账户，并生成一篇文章及评论。</p>
+        <p>请设置一个账户</p>
       </div>
-      <form method='POST'>
+      <form method='POST' action="/admin/doInstall" >
         <div id='item'>
-          <label for='name'>用户名</label>
-          <input type='text' maxlength='20' name='name'></input>
+          <label for='name'>Name</label>
+          <input type='text' maxlength='20' name='loginname'></input>
         </div>
         <div>
-          <label for='password'>密码</label>
+          <label for='password'>Password</label>
           <input type='password' maxlength='20' name='password'></input>
         </div>
         <div>
@@ -44,7 +44,7 @@
       </form>
   <% }else{ %>
       <p>已经初始化过数据库了</p>
-<% } %>
+  <% } %>
     </div>
   </body>
 </html>

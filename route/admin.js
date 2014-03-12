@@ -8,6 +8,8 @@ var akismetConfig = require('../config').akismetConfig;
 var Admin = require('../models/admin');
 var Page = require('../models/page');
 var Post = require('../models/post');
+var Comment = require('../models/comment');
+var Tag = require('../models/tag');
 
 var util = require('../libs/util');
 
@@ -311,13 +313,109 @@ exports.commentSpam = function(req, res, exceptionHandler) {
   });
 };
 
-exports.install = function(req, res, next) {
+/**
+ * install
+ */
+exports.install = function(req, res, exceptionHandler) {
   var data = {
-    title: adminConfig.pageTitle
+    title: 'node.js starter'
   }
 
-  res.render('admin/install', data);
+  Admin.find(null, null, null, function(err, admins) {
+    if (err) {
+      return exceptionHandler().handleError(err, req, res);
+    }
+
+    // 已存在管理员员则说明初始化过了
+    if (admins.length > 0) {
+      data.installed = true;
+    }
+
+    res.render('admin/install', data);
+  });
 };
+
+/**
+ * do install
+ */
+exports.doInstall = function(req, res, exceptionHandler) {
+  var admin = new Admin({ loginname: req.body.loginname,
+                          password: req.body.password });
+
+  admin.validate(function(err) {
+    if (err) {
+      var data = { messages: formatModelErrors(err) };
+      return renderError(res, '/admin/install', data);
+    }
+
+    // save admin
+    admin.save(function(err) {
+      if (err) {
+        return exceptionHandler().handleError(err, req, res);
+      }
+
+      // new comment
+      var comment = new Comment({
+        author: 'happen-zhang',
+        email: 'zhanghaipeng404@gmail.com',
+        website: 'http://github.com/happen-zhang',
+        content: "```\r\n echo 'Nice to meet you!'\r\n```"
+      });
+
+      var tag = new Tag({
+        name: 'Node.js'
+      });
+
+      // add post
+      var post = new Post({
+        title: 'Hello World!',
+        slug: 'hello-world',
+        content: "```\r\n echo 'Hello World'\r\n```",
+        comments: [comment],
+        tags: [tag]
+      });
+
+      // save post
+      post.save(function(err) {
+        if (err) {
+          return exceptionHandler().handleError(err, req, res);
+        }
+
+        // save page
+        var about = new Page({
+          title: '关于我',
+          slug: 'about',
+          content: "```\r\n echo 'Hello World'\r\n```"
+        });
+
+        var links = new Page({
+          title: '友情链接',
+          slug: 'links',
+          content: "*\r\n [Google](https://www.google.com.hk/)"
+        });
+
+        about.save(function(err) {
+          if (err) {
+            return exceptionHandler().handleError(err, req, res);
+          }
+        });
+
+        links.save(function(err) {
+          if (err) {
+            return exceptionHandler().handleError(err, req, res);
+          }          
+        });
+
+        var data = {
+          msg: 'success',
+          title: adminConfig.title
+        };
+
+        res.render('admin/install', data);
+      });
+    });
+  });
+}
 
 /**
  * 验证akismet key
@@ -466,13 +564,7 @@ exports.create = function(req, res, exceptionHandler) {
 
   admin.validate(function(err) {
     if (err) {
-      // admin invalidate
-      var messages = [];
-      for (var error in err.errors) {
-        messages.push(err.errors[error].message);
-      }
-
-      var data = { messages: messages };
+      var data = { messages: formatModelErrors(err) };
       return renderError(res, '/admin/add/' + token, data);
     }
 
@@ -531,4 +623,18 @@ var generateAuthKey = function(admin) {
   return util.md5(admin.loginname
                   + adminConfig.authKey
                   + admin.password);
+}
+
+/**
+ * 格式化model error为数据形式
+ * @param  Object err
+ * @return array
+ */
+var formatModelErrors = function(err) {
+  var messages = [];
+  for (var error in err.errors) {
+    messages.push(err.errors[error].message);
+  }
+
+  return messages;
 }

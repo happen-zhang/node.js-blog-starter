@@ -147,7 +147,13 @@ exports.handle = function(app) {
           exceptionHandler);
 
   // install
-  app.get('/admin/install', admin.install);
+  app.get('/admin/install',
+          admin.install);
+
+  // do install
+  app.post('/admin/doInstall',
+           admin.doInstall,
+           exceptionHandler);
 
   // verify akismet
   app.get('/admin/verifyAkismet',
