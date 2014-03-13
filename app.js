@@ -2,6 +2,7 @@
  * app.js
  */
 
+var http = require('http');
 var express = require('express');
 var partials = require('express-partials');
 var MongoStore = require('connect-mongo')(express);
@@ -89,5 +90,7 @@ if ('production' == app.get('env')) {
   app.set('view cache', true);
 }
 
-// 端口号
-app.listen(3000);
+// 启动服务
+http.createServer(app).listen(app.get('port'), function () {
+  console.log("Express server listening on port " + app.get('port'));
+});
