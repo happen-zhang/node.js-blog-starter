@@ -17,7 +17,7 @@
 
 ## 特别说明 ##
 
-本博客系统的前台和后台的页面是由 @willerce 设计和提供的，而且本博客的原版来自于 @willerce 的[noderce](https://github.com/willerce/noderce)。
+本博客系统的前台和后台的页面是由 @willerce 设计和提供的，而且本博客的原版来自于 [@willerce](http://willerce.com/) 的[noderce](https://github.com/willerce/noderce)。
 
 与[noderce](https://github.com/willerce/noderce)的不同点在于，本博客系统的代码基本都是重写的，使用Mongoose来做数据库存储，Session使用Mongodb来作存储介质，添加了一些新的模块等等。为想学习Node.js的同学提供一点帮助，仅此而已。
 
@@ -25,13 +25,13 @@
 
 ### 克隆项目到本地 ###
 
-`git clone https://github.com/happen-zhang/node.js-blog-starter.git`
+> git clone https://github.com/happen-zhang/node.js-blog-starter.git path-to-your-dir
 
 ### 安装依赖 ###
 
-`cd path-to-your-dir`
+> cd path-to-your-dir
 
-`npm install`
+>  npm install
 
 ### 修改配置 ###
 
@@ -39,17 +39,17 @@
 
 ### 运行程序 ###
 
-`npm start`
+> npm start
 
 ## 测试 ##
 
 请先确保安装了Mocha：
 
-`npm install -g mocha`
+> npm install -g mocha
 
 然后在项目的根目录下运行下面的命令：
 
-`npm test`
+> npm test
 
 ## License ##
 
