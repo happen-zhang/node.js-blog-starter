@@ -25,13 +25,17 @@
 
 ### 克隆项目到本地 ###
 
-> git clone https://github.com/happen-zhang/node.js-blog-starter.git path-to-your-dir
+```
+git clone https://github.com/happen-zhang/node.js-blog-starter.git path-to-your-dir
+```
 
 ### 安装依赖 ###
 
-> cd path-to-your-dir
+```
+cd path-to-your-dir
 
->  npm install
+npm install
+```
 
 ### 修改配置 ###
 
@@ -39,17 +43,23 @@
 
 ### 运行程序 ###
 
-> npm start
+```
+npm start
+```
 
 ## 测试 ##
 
 请先确保安装了Mocha：
 
-> npm install -g mocha
+```
+npm install -g mocha
+```
 
 然后在项目的根目录下运行下面的命令：
 
-> npm test
+```
+npm test
+```
 
 ## License ##
 
